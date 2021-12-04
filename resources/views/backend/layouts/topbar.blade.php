@@ -25,10 +25,19 @@
                     Profile
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+{{--                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">--}}
+{{--                    <i class="fa fa-sign-out fa-sm fa-fw mr-2 text-gray-400"></i>--}}
+{{--                    Logout--}}
+{{--                </a>--}}
+                <a class="nav-link"  href="{{ route('logout') }}"
+
+                   onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
                     <i class="fa fa-sign-out fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Logout
-                </a>
+                    {{ __('Logout') }}</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
             </div>
         </li>
     </ul>
