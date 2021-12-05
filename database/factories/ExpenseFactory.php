@@ -15,6 +15,7 @@ class ExpenseFactory extends Factory
     public function definition()
     {
         return [
+            'user_id' => rand(1, 10),
             'name' => $this->faker->words(5, true),
             'cost' => $this->faker->randomFloat(2, 20, 100),
         ];
