@@ -7,5 +7,5 @@ use App\Http\Controllers\ExpenseController;
 require __DIR__.'/auth.php';
 
 
-Route::get('/', [DashboardController::class, 'index']);
-
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+Route::get('/expense', [ExpenseController::class, 'index'])->name('expenses.index');
