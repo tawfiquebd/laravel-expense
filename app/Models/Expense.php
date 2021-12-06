@@ -10,7 +10,7 @@ class Expense extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'cost'];
+    protected $fillable = ['user_id', 'name', 'cost'];
 
     // An expense belongs to only 1 user
     public function user() {

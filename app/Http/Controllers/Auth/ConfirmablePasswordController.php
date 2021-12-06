@@ -17,7 +17,7 @@ class ConfirmablePasswordController extends Controller
      */
     public function show()
     {
-        return view('customAuth.confirm-password');
+        return view('auth.confirm-password');
     }
 
     /**
@@ -33,11 +33,11 @@ class ConfirmablePasswordController extends Controller
             'password' => $request->password,
         ])) {
             throw ValidationException::withMessages([
-                'password' => __('customAuth.password'),
+                'password' => __('auth.password'),
             ]);
         }
 
-        $request->session()->put('customAuth.password_confirmed_at', time());
+        $request->session()->put('auth.password_confirmed_at', time());
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

@@ -6,6 +6,7 @@
 
 @endsection
 
+
 @section('content')
 
     <div class="content-wrapper">
@@ -32,16 +33,31 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">All Expenses</h3>
+                            <h3 class="card-title">All Expenses
+                                <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addModal">Add Expense</button>
+                            </h3>
                         </div>
                         <!-- /.card-header -->
+
+                        <!-- Showing validation error -->
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                @foreach ($errors->all() as $error)
+                                    <div>{{ $error }}</div>
+                                @endforeach
+                            </div>
+                        @endif
+
                         <div class="card-body">
                             <table id="myTable" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>SL.</th>
                                         <th>Name</th>
-                                        <th>Cost</th>
+                                        <th>Cost (Tk)</th>
                                         <th>Created_at</th>
                                         <th>Updated_at</th>
                                         <th>Edit</th>
@@ -60,8 +76,8 @@
                                     <td>{{ $expense->cost }}</td>
                                     <td>{{ $expense->created_at->format('d-M-Y H:i:s') }}</td>
                                     <td>{{ $expense->updated_at->format('d-M-Y H:i:s') }}</td>
-                                    <td><a class="btn btn-warning" href="#"><i class="fa fa-pencil"></i></a></td>
-                                    <td><a class="btn btn-danger" href="#"><i class="fa fa-trash"></i></a></td>
+                                    <td><button data-toggle="modal" data-target="#editModal" class="btn btn-warning" href="#"><i class="fa fa-pencil"></i></button></td>
+                                    <td><button class="btn btn-danger" href="#"><i class="fa fa-trash"></i></button></td>
                                 </tr>
                                 @endforeach
                                 </tbody>
@@ -79,6 +95,9 @@
 
 @endsection
 
+@include('backend.partials.addExpenseModal')
+@include('backend.partials.editExpenseModal')
+
 @section('scripts')
     <script>
         $(document).ready(function() {
@@ -90,5 +109,29 @@
                 "autoWidth": true
             });
         });
+
+
+        let success = "{{ session('success') ?? '' }}"
+        {{--let success = "{{ session('success') ?? '' }}"--}}
+        {{--let error = "{{ $errors ? 'set' : '' }}"--}}
+
+        setTimeout(function() {
+            if(success !== '') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Expense added successfully.',
+                })
+            }
+            // else if(error === '') {
+            //     Swal.fire({
+            //         icon: 'warning',
+            //         title: 'Error',
+            //         text: 'Expense added failed.',
+            //     })
+            // }
+        }, 500)
+
+
     </script>
 @endsection
