@@ -76,12 +76,13 @@
                                     <td>{{ $expense->cost }}</td>
                                     <td>{{ $expense->created_at->format('d-M-Y H:i:s') }}</td>
                                     <td>{{ $expense->updated_at->format('d-M-Y H:i:s') }}</td>
-                                    <td><button data-toggle="modal" data-target="#editModal" class="btn btn-warning" href="#"><i class="fa fa-pencil"></i></button></td>
+                                    <td><button data-toggle="modal" data-target="#editModal-{{$expense->id}}" class="btn btn-warning"><i class="fa fa-pencil"></i></button></td>
                                     <td><button class="btn btn-danger" href="#"><i class="fa fa-trash"></i></button></td>
                                 </tr>
                                 @endforeach
                                 </tbody>
                             </table>
+
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -112,8 +113,6 @@
 
 
         let success = "{{ session('success') ?? '' }}"
-        {{--let success = "{{ session('success') ?? '' }}"--}}
-        {{--let error = "{{ $errors ? 'set' : '' }}"--}}
 
         setTimeout(function() {
             if(success !== '') {
@@ -123,13 +122,6 @@
                     text: 'Expense added successfully.',
                 })
             }
-            // else if(error === '') {
-            //     Swal.fire({
-            //         icon: 'warning',
-            //         title: 'Error',
-            //         text: 'Expense added failed.',
-            //     })
-            // }
         }, 500)
 
 

@@ -24,18 +24,14 @@ class ExpenseController extends Controller
            'cost' => 'required|numeric|regex:/^([\d]{0,5})(\.[\d]{1,2})?$/',    // regex for decimal 2 places
         ]);
 
-        $expense = Expense::create([
+        Expense::create([
             'user_id' => $id,
             'name' => $request->name,
             'cost' => $request->cost
         ]);
 
-        if($expense) {
-            return redirect()->back()->with('success', 'Successful.');
-        }
-//        else {
-//            return redirect()->back()->with('warning', 'Error.');
-//        }
+        return redirect()->back()->with('success', 'Successful.');
 
     }
+
 }

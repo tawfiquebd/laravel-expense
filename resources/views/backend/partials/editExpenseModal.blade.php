@@ -1,6 +1,7 @@
-
 <!-- Modal -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+@foreach($expenses as $exp)
+<div class="modal fade" id="editModal-{{$exp->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <form action="">
@@ -13,11 +14,11 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input class="form-control" type="text" name="name" id="name" value="{{ old('name') }}" placeholder="Name of Expense">
+                        <input class="form-control" type="text" name="name" id="name" value="{{ $exp->name }}" placeholder="Name of Expense">
                     </div>
                     <div class="form-group">
                         <label for="cost">Cost</label>
-                        <input class="form-control" type="text" name="cost" id="cost" value="{{ old('cost') }}" placeholder="Cost">
+                        <input class="form-control" type="text" name="cost" id="cost" value="{{ $exp->cost }}" placeholder="Cost">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -28,3 +29,4 @@
         </div>
     </div>
 </div>
+@endforeach
