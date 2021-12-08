@@ -37,20 +37,11 @@
                                 <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addModal">Add Expense</button>
                             </h3>
                         </div>
-                        <!-- /.card-header -->
 
                         <!-- Showing validation error -->
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                @foreach ($errors->all() as $error)
-                                    <div>{{ $error }}</div>
-                                @endforeach
-                            </div>
-                        @endif
+                        @include('backend.partials.showError')
 
+                        <!-- /.card-header -->
                         <div class="card-body">
                             <table id="myTable" class="table table-bordered table-striped">
                                 <thead>
@@ -113,13 +104,29 @@
 
 
         let success = "{{ session('success') ?? '' }}"
+        let updateSuccess = "{{ session('update-success') ?? '' }}"
+        let notFound = "{{ session('notfound') ?? '' }}"
 
         setTimeout(function() {
             if(success !== '') {
                 Swal.fire({
                     icon: 'success',
                     title: 'Success',
-                    text: 'Expense added successfully.',
+                    text: 'Expense added successfully!',
+                })
+            }
+            else if(updateSuccess !== '') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Expense updated successfully!',
+                })
+            }
+            else if(notFound !== '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Expense not found to update!',
                 })
             }
         }, 500)
