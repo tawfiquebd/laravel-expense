@@ -16,10 +16,16 @@
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input class="form-control" type="text" name="update_name" id="name" value="{{ $exp->name }}" placeholder="Name of Expense">
+                        @if($errors->has('update_name'))
+                            <span class="text-danger ml-1">{{ $errors->first('update_name') }}</span>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="cost">Cost</label>
                         <input class="form-control" type="text" name="update_cost" id="cost" value="{{ $exp->cost }}" placeholder="Cost">
+                        @if($errors->has('update_cost'))
+                            <span class="text-danger ml-1">{{ $errors->first('update_cost') }}</span>
+                        @endif
                     </div>
                 </div>
                 <div class="modal-footer">

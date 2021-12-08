@@ -15,16 +15,16 @@
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input class="form-control" type="text" name="name" id="name" value="{{ old('name') }}" placeholder="Name of Expense">
-{{--                        @if($errors->has('name'))--}}
-{{--                            <span class="text-danger ml-1">{{ $errors->first('name') }}</span>--}}
-{{--                        @endif--}}
+                        @if($errors->has('name'))
+                            <span class="text-danger ml-1">{{ $errors->first('name') }}</span>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="cost">Cost</label>
                         <input class="form-control" type="text" name="cost" id="cost" value="{{ old('cost') }}" placeholder="Cost">
-{{--                        @if($errors->has('cost'))--}}
-{{--                            <span class="text-danger ml-1">{{ $errors->first('cost') }}</span>--}}
-{{--                        @endif--}}
+                        @if($errors->has('cost'))
+                            <span class="text-danger ml-1">{{ $errors->first('cost') }}</span>
+                        @endif
                     </div>
                 </div>
                 <div class="modal-footer">
