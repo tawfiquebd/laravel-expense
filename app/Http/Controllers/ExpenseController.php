@@ -56,4 +56,16 @@ class ExpenseController extends Controller
 
     }
 
+    public function delete($id) {
+        $expense = Expense::find($id);
+
+        if($expense) {
+            $expense->delete();
+            return redirect()->back()->with('delete-success', 'Expense deleted successfully!');
+        }
+        else {
+            return redirect()->back()->with('delete-failed', 'Expense not found to delete!');
+        }
+    }
+
 }

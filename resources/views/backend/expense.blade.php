@@ -68,7 +68,10 @@
                                     <td>{{ $expense->created_at->format('d-M-Y H:i:s') }}</td>
                                     <td>{{ $expense->updated_at->format('d-M-Y H:i:s') }}</td>
                                     <td><button data-toggle="modal" data-target="#editModal-{{$expense->id}}" class="btn btn-warning"><i class="fa fa-pencil"></i></button></td>
-                                    <td><button class="btn btn-danger" href="#"><i class="fa fa-trash"></i></button></td>
+                                    <td><button onclick="document.getElementById('deleteForm').submit();" class="btn btn-danger" id="delete"><i class="fa fa-trash"></i></button></td>
+                                    <form id="deleteForm" method="POST" action="{{ route('expense.delete', $expense->id) }}">
+                                        @csrf
+                                    </form>
                                 </tr>
                                 @endforeach
                                 </tbody>
@@ -92,6 +95,7 @@
 
 @section('scripts')
     <script>
+        // Data tables
         $(document).ready(function() {
             $('#myTable').DataTable({
                 "paging": true,
@@ -102,10 +106,13 @@
             });
         });
 
-
+        // Sweet alert
         let success = "{{ session('success') ?? '' }}"
         let updateSuccess = "{{ session('update-success') ?? '' }}"
         let notFound = "{{ session('notfound') ?? '' }}"
+        let deleteSuccess = "{{ session('delete-success') ?? '' }}"
+        let deleteFailed = "{{ session('delete-failed') ?? '' }}"
+
 
         setTimeout(function() {
             if(success !== '') {
@@ -127,6 +134,20 @@
                     icon: 'error',
                     title: 'Error',
                     text: 'Expense not found to update!',
+                })
+            }
+            else if(deleteSuccess !== '') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Expense deleted successfully!',
+                })
+            }
+            else if(deleteFailed !== '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Expense not found to delete!',
                 })
             }
         }, 500)
