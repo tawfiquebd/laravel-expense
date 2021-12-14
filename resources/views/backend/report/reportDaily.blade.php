@@ -37,7 +37,7 @@
 
                     <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="myTable" class="table table-bordered table-striped">
+                            <table id="reportTable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>SL.</th>
@@ -58,7 +58,7 @@
                                         <td>{{ ++$i }}</td>
                                         <td>{{ $day }}</td>
                                         <td>{{ $sum }}</td>
-                                        <td><a href="{{ route('report.print', $day) }}" class="btn btn-danger"><i class="fa fa-print"></i></a></td>
+                                        <td><a target="_blank" href="{{ route('report.print', $day) }}" class="btn btn-danger"><i class="fa fa-print"></i></a></td>
                                     </tr>
 
                                 @endforeach
@@ -78,7 +78,19 @@
 
 @endsection
 
-@section('script')
+@section('scripts')
+    <script>
+        // Data tables
+        $(document).ready(function() {
+            $('#reportTable').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "autoWidth": true
+            });
+        });
+    </script>
 
 @endsection
 
