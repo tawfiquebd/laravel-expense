@@ -14,7 +14,7 @@ class ReportController extends Controller
 {
     public function reportDaily() {
 
-        $date = new \DateTime('tomorrow -1 month'); // from last 1 month till today
+        $date = new \DateTime('tomorrow -1 year'); // from last 1 month till today
 
         \DB::statement("SET SQL_MODE=''");
 
