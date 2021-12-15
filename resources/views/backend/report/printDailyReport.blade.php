@@ -21,7 +21,7 @@
     <div class="container">
         <header>
             <br>
-            <h1 class="text-center">Invoice</h1>
+            <h1 class="text-center">Report</h1>
             <hr>
         </header>
 

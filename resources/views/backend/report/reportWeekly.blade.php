@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 
-@section('title', 'Daily Report')
+@section('title', 'Weekly Report')
 
 @section('style')
 
@@ -19,7 +19,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Home</a></li>
-                            <li class="breadcrumb-item active">Daily Report</li>
+                            <li class="breadcrumb-item active">Weekly Report</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -32,18 +32,18 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Daily Report </h3>
+                            <h3 class="card-title">Weekly Report </h3>
                         </div>
 
-                    <!-- /.card-header -->
+                        <!-- /.card-header -->
                         <div class="card-body">
                             <table id="reportTable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>SL.</th>
-                                    <th>Date</th>
+                                    <th>From Date</th>
+                                    <th>To Date</th>
                                     <th>Total Cost (Tk)</th>
-                                    <th>Action</th>
                                 </tr>
                                 </thead>
 
@@ -52,13 +52,13 @@
                                     $i = 0;
                                 @endphp
 
-                                @foreach($days as $day => $sum)
+                                @foreach($expense as $exp)
 
                                     <tr>
                                         <td>{{ ++$i }}</td>
-                                        <td>{{ $day }}</td>
-                                        <td>{{ $sum }}</td>
-                                        <td><a target="_blank" href="{{ route('report.print', $day) }}" class="btn btn-danger"><i class="fa fa-print"></i></a></td>
+                                        <td>{{ $previousDate }}</td>
+                                        <td>{{ $todayDate }}</td>
+                                        <td>{{ $exp->total }}</td>
                                     </tr>
 
                                 @endforeach

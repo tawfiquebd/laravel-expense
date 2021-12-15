@@ -18,6 +18,8 @@ Route::group(['middleware' => 'auth'], function() {
 
     // Report Controller
     Route::get('/report/daily', [ReportController::class, 'reportDaily'])->name('report.daily');
-    Route::get('/report/{date}', [ReportController::class, 'printDailyReport'])->name('report.print');
+    Route::get('/report/daily/{date}', [ReportController::class, 'printDailyReport'])->name('report.print');
+    Route::get('/report/weekly', [ReportController::class, 'reportWeekly'])->name('report.weekly');
+    Route::get('/report/monthly', [ReportController::class, 'reportMonthly'])->name('report.monthly');
 });
 

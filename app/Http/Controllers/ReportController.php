@@ -27,8 +27,6 @@ class ReportController extends Controller
             ->groupBy('date')
             ->orderBy('date', 'DESC')
             ->pluck('total', 'date');
-//            ->get(['id', 'total', 'date', 'name']);
-//        print_r($days);
 
         return view('backend.report.reportDaily', compact('days'));
     }
@@ -76,6 +74,22 @@ class ReportController extends Controller
         if($d && $d->format($format) == $date){
             return true;
         }
+    }
+
+    public function reportWeekly() {
+
+        $todayDate = date('Y-m-d');
+        $previousDateTime = new \DateTime('tomorrow -1 week');  // 1 week ago to today's date
+        $previousDate = $previousDateTime->format('Y-m-d');
+
+        $expense = DB::table('expenses')->select(
+            DB::raw('sum(cost) as total')
+        )
+            ->where('user_id', Auth::id())
+            ->where('created_at', '>', $previousDate)
+            ->get(['total']);
+
+        return view('backend.report.reportWeekly', compact('todayDate', 'previousDate', 'expense'));
     }
 
 }
