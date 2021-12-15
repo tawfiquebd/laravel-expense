@@ -92,4 +92,19 @@ class ReportController extends Controller
         return view('backend.report.reportWeekly', compact('todayDate', 'previousDate', 'expense'));
     }
 
+    public function reportMonthly() {
+
+        $expenseByMonth = DB::table('expenses')
+            ->select(array(
+                DB::raw('sum(cost) as total'),
+                DB::raw('monthname(created_at) as month'),
+                DB::raw('year(created_at) as year')
+            ))
+            ->where('user_id', '=', Auth::id())
+            ->groupby(['month', 'year'])
+            ->latest()
+            ->get();
+        return view('backend.report.reportMonthly', compact('expenseByMonth'));
+    }
+
 }
