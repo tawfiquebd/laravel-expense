@@ -20,7 +20,7 @@
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                  aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="{{ url('settings/profile') }}">
+                <a class="dropdown-item" href="{{ route('profile.index') }}">
                     <i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
                 </a>
