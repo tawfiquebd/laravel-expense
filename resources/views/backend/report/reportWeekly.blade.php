@@ -58,7 +58,7 @@
                                         <td>{{ ++$i }}</td>
                                         <td>{{ $previousDate }}</td>
                                         <td>{{ $todayDate }}</td>
-                                        <td>{{ $exp->total }}</td>
+                                        <td>{{ $exp->total ?? 0 }}</td>
                                     </tr>
 
                                 @endforeach

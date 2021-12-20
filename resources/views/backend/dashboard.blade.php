@@ -33,15 +33,14 @@
             <div class="row">
                 <div class="col-lg-4 col-4">
                     <!-- small box -->
-                    <div class="small-box bg-info">
+                    <div class="small-box bg-primary">
                         <div class="inner">
-                            @foreach($expenseByToday as $today)
-                            <h3>{{ $today->total }}<sup style="font-size: 20px">Tk</sup></h3>
-                            @endforeach
+                            <h3> {{ $expenseByToday[0] ?? 0 }} <sup style="font-size: 20px">Tk</sup></h3>
+
                             <p>Expense Today</p>
                         </div>
                         <div class="icon">
-                            <i class="fa fa-clock-o"></i>
+                            <i class="fa fa-calendar-o"></i>
                         </div>
                         <a href="{{ route('report.daily') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
@@ -52,7 +51,7 @@
                     <div class="small-box bg-success">
                         <div class="inner">
                             @foreach($expenseByWeek as $week)
-                            <h3>{{ $week->total }}<sup style="font-size: 20px">Tk</sup></h3>
+                            <h3>{{ $week->total ?? '0' }} <sup style="font-size: 20px">Tk</sup></h3>
                             @endforeach
                             <p>Expense This Week</p>
                         </div>
@@ -68,7 +67,7 @@
                     <div class="small-box bg-warning">
                         <div class="inner">
                             @foreach($expenseByMonth as $month)
-                            <h3> {{ $month->total }} <sup style="font-size: 20px">Tk</sup></h3>
+                            <h3> {{ $month->total ?? '0' }} <sup style="font-size: 20px">Tk</sup></h3>
                             @endforeach
                             <p>Expense This month</p>
                         </div>

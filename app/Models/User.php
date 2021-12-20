@@ -47,4 +47,10 @@ class User extends Authenticatable
     public function expenses() {
         return $this->hasMany(Expense::class);
     }
+
+    // Many to many relation
+    // Roles of a user
+    public function roles() {
+        return $this->belongsToMany('App\Models\Role');
+    }
 }

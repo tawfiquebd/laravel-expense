@@ -22,7 +22,8 @@ class DashboardController extends Controller
             ->where('user_id', Auth::id())
             ->where('created_at', 'like', "$dateToday%")
             ->groupBy('date')
-            ->get();
+            ->pluck('total');     // get only total sum as an array
+//            ->get();    // get date and total sum
 
         // weekly expense
         $previousDateTime = new \DateTime('tomorrow -1 week');  // 1 week ago to today's date
