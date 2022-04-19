@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap data tables css -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
+    <!-- Yajra Data tables css -->
+    <link rel="stylesheet" href="cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('backend/plugins/font-awesome/css/font-awesome.min.css') }}">
     <!-- Ionicons -->
@@ -58,6 +60,10 @@
 </script>
 <!-- Bootstrap 4 -->
 <script src="{{ asset('backend/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- jquery for yajra data tables -->
+<script src="code.jquery.com/jquery-1.10.2.min.js"></script>
+<!-- jquery data tables js -->
+<script src="cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
 <!-- Morris.js charts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <!-- Sparkline -->

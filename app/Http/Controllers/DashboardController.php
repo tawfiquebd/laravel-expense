@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Expense;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $dateToday = date('Y-m-d');
         $currentMonth = date('m');
 
@@ -26,12 +28,11 @@ class DashboardController extends Controller
 //            ->get();    // get date and total sum
 
         // weekly expense
-        $previousDateTime = new \DateTime('tomorrow -1 week');  // 1 week ago to today's date
+        $previousDateTime = new DateTime('tomorrow -1 week');  // 1 week ago to today's date
         $previousDate = $previousDateTime->format('Y-m-d');
 
-        $expenseByWeek = DB::table('expenses')->select(
-            DB::raw('sum(cost) as total')
-        )
+        $expenseByWeek = DB::table('expenses')
+            ->select(DB::raw('sum(cost) as total'))
             ->where('user_id', Auth::id())
             ->where('created_at', '>', $previousDate)
             ->get();
@@ -40,7 +41,7 @@ class DashboardController extends Controller
         $expenseByMonth = DB::table('expenses')
             ->select(DB::raw('sum(cost) as total'))
             ->where('user_id', '=', Auth::id())
-            ->whereMonth('created_at', $currentMonth )
+            ->whereMonth('created_at', $currentMonth)
             ->get();
 
         return view('backend.dashboard', compact('expenseByToday', 'expenseByWeek', 'expenseByMonth'));

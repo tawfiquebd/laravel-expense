@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
 //        User::factory(10)->create();
 //        Expense::factory(10)->create();
 
-        User::factory(10)->create()->each(function($user) {
-            Expense::factory(rand(1, 4))->create([
+        User::factory(5)->create()->each(function($user) {
+            Expense::factory(rand(1, 10))->create([
                 'user_id' => $user->id
             ]);
         });
