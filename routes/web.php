@@ -8,14 +8,14 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProfileController;
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => 'auth'], function () {
 
     Route::get("/redirectAuthenticatedUsers", [RedirectAuthenticatedUsersController::class, "home"]);
 
     // Users panel
-    Route::group(['middleware' => 'checkRole:Basic User'], function() {
+    Route::group(['middleware' => 'checkRole:Basic User'], function () {
 
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth'], function() {
     });
 
     // Admin panel
-    Route::group(['middleware' => 'checkRole:Admin'], function() {
+    Route::group(['middleware' => 'checkRole:Admin'], function () {
 
         Route::get('/admin', [AdminController::class, "dashboard"])->name('admin.dashboard');
         Route::get('/admin/users', [AdminController::class, "users"])->name('admin.users');
