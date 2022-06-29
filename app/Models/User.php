@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -44,13 +46,20 @@ class User extends Authenticatable
     ];
 
     // A user has many expenses
-    public function expenses() {
+    public function expenses(): HasMany
+    {
         return $this->hasMany(Expense::class);
     }
 
     // Many to many relation
     // Roles of a user
-    public function roles() {
+    public function roles(): BelongsToMany
+    {
         return $this->belongsToMany('App\Models\Role');
+    }
+
+    public function categories(): HasMany
+    {
+        return $this->hasMany(Category::class, 'user_id', 'id');
     }
 }
