@@ -15,6 +15,4 @@ class Category extends Model
         'name',
         'user_id',
     ];
-
-
 }

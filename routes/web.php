@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseController;
@@ -23,6 +24,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/settings/profile', [ProfileController::class, 'index'])->name('profile.index');
         Route::post('/settings/profile/update', [ProfileController::class, 'updateInfo'])->name('profile.update');
         Route::post('/settings/profile/password/update', [ProfileController::class, 'updatePassword'])->name('profile.password');
+
+        Route::group(['prefix' => '/category'], function () {
+            Route::get('/', [CategoryController::class, 'index'])->name('category.index');
+            Route::post('/', [CategoryController::class, 'store'])->name('category.store');
+        });
+
+
     });
 
     // Admin panel
