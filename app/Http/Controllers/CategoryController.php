@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class CategoryController extends Controller
 {
@@ -24,11 +26,16 @@ class CategoryController extends Controller
         ]);
 
         try {
-            \App\Models\Category::create($request->except('_token'));
+            Category::query()->create([
+                'name' => $request->input('name'),
+                'user_id' => Auth::id(),
+            ]);
 
-            return redirect()->route('category.index')->with('success', "Book created successfully!");
+
+            return redirect()->back()->with('success', "Book Created Successfully!");;
+//            return redirect()->route('category.index')->with('success', "Book created successfully!");
         } catch (Exception $exception) {
-            return redirect()->route('category.index')->with('error', "Something went wrong ".$exception->getMessage());
+            return redirect()->back()->with('error', "Something went wrong ".$exception->getMessage());
         }
     }
 }

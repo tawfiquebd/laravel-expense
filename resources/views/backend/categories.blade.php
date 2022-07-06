@@ -40,7 +40,9 @@
                             <div class="card-body">
                                 <form action="{{ route('category.store') }}" method="POST">
                                     @csrf
-
+                                    @if(session()->has('success'))
+                                        <p class="text-success"> {{ session()->get('success') }}</p>
+                                    @endif
                                     <div class="form-group">
                                         <label for="name">Name</label>
                                         <input type="text" class="form-control" name="name" id="name">
