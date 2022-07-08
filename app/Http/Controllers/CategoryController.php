@@ -53,9 +53,7 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id)
     {
-        $query = Category::query();
-        $categories = $query->latest()->paginate(10);
-        $category = $query->find($id)->update([
+        Category::query()->find($id)->update([
             'name' => $request->input('name'),
         ]);
 
