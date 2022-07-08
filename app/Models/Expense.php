@@ -10,10 +10,16 @@ class Expense extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'name', 'cost'];
+    protected $fillable = [
+        'name',
+        'cost',
+        'category_id',
+        'user_id',
+    ];
 
     // An expense belongs to only 1 user
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
