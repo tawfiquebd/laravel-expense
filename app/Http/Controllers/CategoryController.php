@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -12,10 +13,11 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::orderBy('id', 'desc')->get();
+        $categories = Category::query()->latest()->paginate(10);
 
         return view('backend.categories', [
             'categories' => $categories,
+            'category' => null,
         ]);
     }
 
@@ -31,11 +33,21 @@ class CategoryController extends Controller
                 'user_id' => Auth::id(),
             ]);
 
-
-            return redirect()->back()->with('success', "Book Created Successfully!");;
-//            return redirect()->route('category.index')->with('success', "Book created successfully!");
+            return redirect()->back()->with('success', "Book Created Successfully!");
         } catch (Exception $exception) {
-            return redirect()->back()->with('error', "Something went wrong ".$exception->getMessage());
+            return redirect()->back()->with('error', "Something went wrong " . $exception->getMessage());
         }
+    }
+
+    public function edit($id)
+    {
+        $query = Category::query();
+        $categories = $query->latest()->paginate(10);
+        $category = $query->find($id);
+
+        return view('backend.categories', [
+            'categories' => $categories,
+            'category' => $category,
+        ]);
     }
 }
