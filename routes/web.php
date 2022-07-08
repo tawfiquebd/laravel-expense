@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/', [CategoryController::class, 'index'])->name('category.index');
             Route::post('/', [CategoryController::class, 'store'])->name('category.store');
             Route::get('/edit/{id}', [CategoryController::class, 'edit']);
+            Route::post('/update/{id}', [CategoryController::class, 'update']);
         });
 
 

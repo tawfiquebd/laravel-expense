@@ -38,15 +38,20 @@
                                 <h4>Create Book</h4>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('category.store') }}" method="POST">
+                                    @if(request()->is('category/*'))
+                                    <form action="{{ url('/category/update', $category->id) }}" method="POST">
+                                    @else
+                                    <form action="{{ route('category.store') }}" method="POST" >
+                                    @endif
                                     @csrf
 
                                     @includeIf('.backend.partials.response-message')
 
-                                    <div class="form-group">
+                                    <div class=" form-group">
                                         <label for="name">Name</label>
                                         <input type="text" class="form-control"
-                                               value="{{ $category ? $category->name : '' }}" name="name" id="name">
+                                               value="{{ $category ? $category->name : '' }}" name="name"
+                                               id="name">
                                     </div>
                                     @if(request()->is('category/*'))
                                         <button type="submit" class="btn btn-sm btn-info">Update</button>

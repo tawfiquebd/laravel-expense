@@ -50,4 +50,15 @@ class CategoryController extends Controller
             'category' => $category,
         ]);
     }
+
+    public function update(Request $request, $id)
+    {
+        $query = Category::query();
+        $categories = $query->latest()->paginate(10);
+        $category = $query->find($id)->update([
+            'name' => $request->input('name'),
+        ]);
+
+        return redirect('/category')->with('success', 'Book Updated Successfully');
+    }
 }
