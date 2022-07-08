@@ -38,27 +38,27 @@
                                 <h4>Create Book</h4>
                             </div>
                             <div class="card-body">
-                                    @if(request()->is('category/*'))
+                                @if(request()->is('category/*'))
                                     <form action="{{ url('/category/update', $category->id) }}" method="POST">
-                                    @else
-                                    <form action="{{ route('category.store') }}" method="POST" >
-                                    @endif
-                                    @csrf
+                                        @else
+                                            <form action="{{ route('category.store') }}" method="POST">
+                                                @endif
+                                                @csrf
 
-                                    @includeIf('.backend.partials.response-message')
+                                                @includeIf('.backend.partials.response-message')
 
-                                    <div class=" form-group">
-                                        <label for="name">Name</label>
-                                        <input type="text" class="form-control"
-                                               value="{{ $category ? $category->name : '' }}" name="name"
-                                               id="name">
-                                    </div>
-                                    @if(request()->is('category/*'))
-                                        <button type="submit" class="btn btn-sm btn-info">Update</button>
-                                    @else
-                                        <button type="submit" class="btn btn-sm btn-primary">Submit</button>
-                                    @endif
-                                </form>
+                                                <div class=" form-group">
+                                                    <label for="name">Name</label>
+                                                    <input type="text" class="form-control"
+                                                           value="{{ $category ? $category->name : '' }}" name="name"
+                                                           id="name">
+                                                </div>
+                                                @if(request()->is('category/*'))
+                                                    <button type="submit" class="btn btn-sm btn-info">Update</button>
+                                                @else
+                                                    <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                                                @endif
+                                            </form>
                             </div>
                         </div>
                     </div>
@@ -83,13 +83,21 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $category->name }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($category->created_at)->format('d-m-y h:i:s') }}</td>
-                                            <td>
+                                            <td>{{ \Carbon\Carbon::parse($category->created_at)->format('d-m-y h:i:s a') }}</td>
+                                            <td class="d-flex justify-content-around">
                                                 <a class="btn btn-sm btn-warning"
                                                    href="{{ url('/category/edit', $category->id) }}"><i
-                                                        class="fa fa-pencil"></i></a> |
-                                                <button class="btn btn-sm btn-danger" type="submit"><i
-                                                        class="fa fa-trash-o"></i></button>
+                                                        class="fa fa-pencil"></i></a>
+
+                                                <form id="form" action="{{ url('/category/delete', $category->id) }}"
+                                                      method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{ $category->id }}">
+                                                    <button class="btn btn-sm btn-danger"
+                                                            onclick="deleteBookFunc()"
+                                                            type="button"><i
+                                                            class="fa fa-trash-o"></i></button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -109,5 +117,39 @@
 @endsection
 
 @section('scripts')
+
+    <script>
+
+        // Sweet alert
+
+        function deleteBookFunc(e) {
+            var form = document.getElementById('form');
+            Swal.fire({
+                title: 'Are you sure to delete this Book?',
+                text: "All expenses under this book will be deleted!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                    form.submit();
+                    setTimeout(function () {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your book has been deleted.',
+                            'success'
+                        )
+                    }, 500)
+
+                }
+            });
+        }
+
+
+
+    </script>
 
 @endsection

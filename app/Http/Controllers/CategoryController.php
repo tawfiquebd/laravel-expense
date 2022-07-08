@@ -59,4 +59,12 @@ class CategoryController extends Controller
 
         return redirect('/category')->with('success', 'Book Updated Successfully');
     }
+
+    public function destroy(Request $request)
+    {
+        $id = $request->get('id');
+        Category::query()->find($id)->delete();
+
+        return redirect()->back()->with('delete', 'Book Deleted Successfully');
+    }
 }
