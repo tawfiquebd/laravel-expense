@@ -36,7 +36,6 @@ class ExpenseController extends Controller
 
         $messages = [
             $expense_type => null,
-            $expense_type => null,
         ];
 
         Expense::query()->create([
