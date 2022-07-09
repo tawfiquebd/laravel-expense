@@ -73,7 +73,6 @@
                                         @endif
                                     </div>
 
-
                                     <div class=" form-group">
                                         <label for="cost">Cost</label>
                                         <input required type="text" class="form-control"
@@ -83,6 +82,19 @@
                                         @if($errors->has('cost'))
                                             <span class="text-danger font-weight-bold">
                                                 {{ $errors->first('cost') }}
+                                            </span>
+                                        @endif
+                                    </div>
+
+                                    <div class=" form-group">
+                                        <label for="created_at">Date</label>
+                                        <input required type="date" class="form-control"
+                                               name="created_at"
+                                               id="created_at">
+
+                                        @if($errors->has('created_at'))
+                                            <span class="text-danger font-weight-bold">
+                                                {{ $errors->first('created_at') }}
                                             </span>
                                         @endif
                                     </div>

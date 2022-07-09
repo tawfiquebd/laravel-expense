@@ -33,7 +33,6 @@ class ExpenseController extends Controller
             ->latest()->get();
 
         $balanceSummary = $this->balanceSummary($book);
-        $addExpenseAfterNewDay = $this->addExpenseAfterNewDay();
 
         return view('backend.expense', compact('expenses', 'book', 'balanceSummary'));
     }
@@ -51,9 +50,9 @@ class ExpenseController extends Controller
 
         $available_balance = $deposit - $withdraw;
 
-        $balanceRatio = ($deposit * 30) / 100;
+        $balanceRatio = $deposit * 30 / 100;
         $lowerBalance = null;
-        if ($available_balance <= $balanceRatio) {
+        if (($deposit > $available_balance) && ($available_balance < $balanceRatio)) {
             $lowerBalance = "Your remaining balance is low";
         }
 
@@ -67,37 +66,19 @@ class ExpenseController extends Controller
         return $balance;
     }
 
-    private function addExpenseAfterNewDay()
-    {
-        $time = "24:00";
-        $created_at = Carbon::parse($time)->format('H:i:s');
-        $server_time = Carbon::now()->format('H:i:s');
-
-        $categories = Category::query()->pluck('id');
-
-        if ($created_at == $server_time) {
-            for ($i = 0; $i < count($categories); $i++) {
-                Expense::query()->create([
-                    'name' => 'Automatic Deposit',
-                    'cost' => 0.00,
-                    'expense_type' => 'deposit',
-                    'category_id' => $categories[$i],
-                    'user_id' => Auth::id(),
-                ]);
-            }
-        }
-    }
-
     public function deposit(Request $request)
     {
         $request->validate([
             'name' => 'required|min:3|max:255',
-            'cost' => 'required|numeric|regex:/^([\d]{0,5})(\.[\d]{1,2})?$/',    // regex for decimal 2 places
+            'cost' => 'required|numeric|regex:/^([\d]{0,10})(\.[\d]{1,2})?$/',    // regex for decimal 2 places
             'expense_type' => 'required',
+            'created_at' => 'required',
         ]);
 
         $expense_type = $request->input('expense_type');
         $cost = $request->input('cost');
+        $time = date('H:i:s', time());
+        $date = $request->input('created_at') . " " . $time;
 
         $messages = [
             $expense_type => null,
@@ -109,6 +90,7 @@ class ExpenseController extends Controller
             'expense_type' => $expense_type,
             'category_id' => $request->input('category'),
             'user_id' => Auth::id(),
+            'created_at' => $date,
         ]);
 
         $messages = [
