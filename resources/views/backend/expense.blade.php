@@ -15,6 +15,7 @@
         table td {
             border: 1px solid #000;
             text-align: center;
+            padding: 2px;
         }
     </style>
 
@@ -117,11 +118,11 @@
                                         <h4>Balance Summary <i class="fa fa-usd"></i></h4>
                                     </div>
                                     <div class="card-body">
-                                        <h5>Total Deposit: <span class="badge badge-success">{{ number_format($totalBalance['deposit'], 2) }}</span> BDT /=</h5>
-                                        <h5>Total Withdraw: <span class="badge badge-warning">{{ number_format($totalBalance['withdraw'], 2) }}</span> BDT /=</h5>
-                                        <h5>Available Balance: <span class="badge badge-danger">{{ number_format($totalBalance['available_balance'], 2) }}</span> BDT /=</h5>
+                                        <h5>Total Deposit: <span class="badge badge-success">{{ number_format($balanceSummary['deposit'], 2) }}</span> BDT /=</h5>
+                                        <h5>Total Withdraw: <span class="badge badge-warning">{{ number_format($balanceSummary['withdraw'], 2) }}</span> BDT /=</h5>
+                                        <h5>Available Balance: <span class="badge badge-danger">{{ number_format($balanceSummary['available_balance'], 2) }}</span> BDT /=</h5>
 
-                                        <h6 class="text-danger">{{ $totalBalance['lowerBalance'] }}</h6>
+                                        <h6 class="text-danger">{{ $balanceSummary['lowerBalance'] }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -187,7 +188,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
-                            {{ $expenses->links('pagination::bootstrap-4') }}
+                            {{--{{ $expenses->links('pagination::bootstrap-4') }}--}}
                         </div>
                     </div>
                 </div>

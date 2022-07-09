@@ -42,7 +42,7 @@
                         <div class="col-md-3">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>{{ $book->name }}</h5>
+                                    <h5>{{ $book->name }} <i class="fa fa-book"></i></h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="heading">

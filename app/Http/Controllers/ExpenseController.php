@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Expense;
-use Response;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,14 +30,15 @@ class ExpenseController extends Controller
             'user',
         ])
             ->where('category_id', $book)
-            ->latest()->paginate(10);
+            ->latest()->get();
 
-        $totalBalance = $this->totalBalance($book);
+        $balanceSummary = $this->balanceSummary($book);
+        $addExpenseAfterNewDay = $this->addExpenseAfterNewDay();
 
-        return view('backend.expense', compact('expenses', 'book', 'totalBalance'));
+        return view('backend.expense', compact('expenses', 'book', 'balanceSummary'));
     }
 
-    private function totalBalance($categoryId)
+    private function balanceSummary($categoryId)
     {
         $query = Expense::query()->get();
         $deposit = $query->where('expense_type', 'deposit')
@@ -64,6 +65,27 @@ class ExpenseController extends Controller
         ];
 
         return $balance;
+    }
+
+    private function addExpenseAfterNewDay()
+    {
+        $time = "24:00";
+        $created_at = Carbon::parse($time)->format('H:i:s');
+        $server_time = Carbon::now()->format('H:i:s');
+
+        $categories = Category::query()->pluck('id');
+
+        if ($created_at == $server_time) {
+            for ($i = 0; $i < count($categories); $i++) {
+                Expense::query()->create([
+                    'name' => 'Automatic Deposit',
+                    'cost' => 0.00,
+                    'expense_type' => 'deposit',
+                    'category_id' => $categories[$i],
+                    'user_id' => Auth::id(),
+                ]);
+            }
+        }
     }
 
     public function deposit(Request $request)
