@@ -40,6 +40,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/index/{category?}', [ExpenseController::class, 'index']);
             Route::post('/deposit', [ExpenseController::class, 'deposit']);
             Route::post('/withdraw/{category?}', [ExpenseController::class, 'withdraw']);
+            Route::get('/edit/{id?}/{category?}', [ExpenseController::class, 'edit']);
         });
 
 

@@ -34,7 +34,12 @@ class ExpenseController extends Controller
 
         $balanceSummary = $this->balanceSummary($book);
 
-        return view('backend.expense', compact('expenses', 'book', 'balanceSummary'));
+        return view('backend.expense', [
+            'expense' => null,
+            'expenses' => $expenses,
+            'book' => $book,
+            'balanceSummary' => $balanceSummary,
+        ]);
     }
 
     private function balanceSummary($categoryId)
@@ -100,6 +105,29 @@ class ExpenseController extends Controller
 
         return redirect()->back()->with('success', $messages[$expense_type]);
 
+    }
+
+    public function edit(Request $request)
+    {
+        $book = $request->get('category');
+        $query = Expense::query();
+        $expenses = $query->with([
+            'category',
+            'user',
+        ])
+            ->where('category_id', $book)
+            ->latest()->get();
+
+        $expense = $expenses->where('id', $request->get('id'))->first();
+
+        $balanceSummary = $this->balanceSummary($book);
+
+        return view('backend.expense', [
+            'expense' => $expense,
+            'expenses' => $expenses,
+            'book' => $book,
+            'balanceSummary' => $balanceSummary,
+        ]);
     }
 
     public function update(Request $request, $id)

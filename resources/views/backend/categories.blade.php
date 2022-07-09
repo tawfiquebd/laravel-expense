@@ -52,6 +52,10 @@
                                                     <input type="text" class="form-control"
                                                            value="{{ $category ? $category->name : '' }}" name="name"
                                                            id="name">
+
+                                                    @if($errors->has('name'))
+                                                        <b class="text-danger">{{ $errors->first('name') }}</b>
+                                                    @endif
                                                 </div>
                                                 @if(request()->is('category/*'))
                                                     <button type="submit" class="btn btn-sm btn-info">Update</button>
@@ -133,21 +137,23 @@
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, delete it!'
 
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                    form.submit();
-                    setTimeout(function () {
-                        Swal.fire(
-                            'Deleted!',
-                            'Your book has been deleted.',
-                            'success'
-                        )
-                    }, 500)
+            }).then((result) = > {
+                if(result.isConfirmed
+        )
+            {
+                form.submit();
+                setTimeout(function () {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your book has been deleted.',
+                        'success'
+                    )
+                }, 500)
 
-                }
-            });
+            }
+        })
+            ;
         }
-
 
 
     </script>

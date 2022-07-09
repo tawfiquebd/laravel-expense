@@ -8,9 +8,11 @@
         .btn {
             padding: 2px 7px;
         }
+
         table {
             width: 100%;
         }
+
         table th,
         table td {
             border: 1px solid #000;
@@ -62,7 +64,8 @@
 
                                     <div class=" form-group">
                                         <label for="name">Name</label>
-                                        <input required type="text" class="form-control"
+                                        <input required type="text" value="{{ $expense->name ?? '' }}"
+                                               class="form-control"
                                                name="name"
                                                id="name">
 
@@ -75,7 +78,8 @@
 
                                     <div class=" form-group">
                                         <label for="cost">Cost</label>
-                                        <input required type="text" class="form-control"
+                                        <input required type="text" value="{{ $expense->cost ?? '' }}"
+                                               class="form-control"
                                                name="cost"
                                                id="cost">
 
@@ -88,7 +92,8 @@
 
                                     <div class=" form-group">
                                         <label for="created_at">Date</label>
-                                        <input required type="date" class="form-control"
+                                        <input required type="date" value="{{ $expense ? \Carbon\Carbon::parse($expense->created_at)->format('m/d/Y') : ''  }}"
+                                               class="form-control"
                                                name="created_at"
                                                id="created_at">
 
@@ -103,8 +108,11 @@
                                         <label for="expense_type">Expense Type</label>
                                         <select required name="expense_type" id="expense_type" class="form-control">
                                             <option value="">--- Select ---</option>
-                                            <option value="deposit">Deposit</option>
-                                            <option value="withdraw">Withdraw</option>
+                                            @if($expense && $expense->expense_type == 'deposit')
+                                                <option selected value="deposit">Deposit</option>
+                                            @else
+                                                <option selected value="withdraw"> Withdraw </option>
+                                            @endif
                                         </select>
 
                                         @if($errors->has('expense_type'))
@@ -130,9 +138,15 @@
                                         <h4>Balance Summary <i class="fa fa-usd"></i></h4>
                                     </div>
                                     <div class="card-body">
-                                        <h5>Total Deposit: <span class="badge badge-success">{{ number_format($balanceSummary['deposit'], 2) }}</span> BDT /=</h5>
-                                        <h5>Total Withdraw: <span class="badge badge-warning">{{ number_format($balanceSummary['withdraw'], 2) }}</span> BDT /=</h5>
-                                        <h5>Available Balance: <span class="badge badge-danger">{{ number_format($balanceSummary['available_balance'], 2) }}</span> BDT /=</h5>
+                                        <h5>Total Deposit: <span
+                                                class="badge badge-success">{{ number_format($balanceSummary['deposit'], 2) }}</span>
+                                            BDT /=</h5>
+                                        <h5>Total Withdraw: <span
+                                                class="badge badge-warning">{{ number_format($balanceSummary['withdraw'], 2) }}</span>
+                                            BDT /=</h5>
+                                        <h5>Available Balance: <span
+                                                class="badge badge-danger">{{ number_format($balanceSummary['available_balance'], 2) }}</span>
+                                            BDT /=</h5>
 
                                         <h6 class="text-danger">{{ $balanceSummary['lowerBalance'] }}</h6>
                                     </div>
@@ -167,18 +181,20 @@
                                                     <td>{{ number_format($expense->cost, 2) }} BDT /=</td>
                                                     @if($expense->expense_type == "withdraw")
                                                         <td>
-                                                            <span class="badge badge-pill badge-danger">{{ ucfirst($expense->expense_type) }}</span>
+                                                            <span
+                                                                class="badge badge-pill badge-danger">{{ ucfirst($expense->expense_type) }}</span>
                                                         </td>
                                                     @else
                                                         <td>
-                                                            <span class="badge badge-pill badge-success">{{ ucfirst($expense->expense_type) }}</span>
+                                                            <span
+                                                                class="badge badge-pill badge-success">{{ ucfirst($expense->expense_type) }}</span>
                                                         </td>
                                                     @endif
                                                     <td>{{ $expense->category->name }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($expense->created_at)->format('d-m-y h:i:s a') }}</td>
                                                     <td class="d-flex justify-content-between">
                                                         <a class="btn btn-sm btn-warning"
-                                                           href="{{ url('/category/edit') }}"><i
+                                                           href="{{ url("/expense/edit/?id=$expense->id&category={$expense->category->id}") }}"><i
                                                                 class="fa fa-pencil"></i></a>
 
                                                         <form id="form" action="{{ url('/category/delete') }}"
