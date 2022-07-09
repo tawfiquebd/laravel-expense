@@ -19,6 +19,7 @@ class CreateExpensesTable extends Migration
             $table->double('cost');
             $table->unsignedInteger('category_id');
             $table->unsignedInteger('user_id');
+            $table->string('expense_type')->comment('deposit, withdraw');
             $table->timestamps();
         });
     }

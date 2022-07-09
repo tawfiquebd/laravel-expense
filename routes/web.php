@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/settings/profile/update', [ProfileController::class, 'updateInfo'])->name('profile.update');
         Route::post('/settings/profile/password/update', [ProfileController::class, 'updatePassword'])->name('profile.password');
 
+        // Category
         Route::group(['prefix' => '/category'], function () {
             Route::get('/', [CategoryController::class, 'index'])->name('category.index');
             Route::post('/', [CategoryController::class, 'store'])->name('category.store');
@@ -32,6 +33,17 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('/update/{id}', [CategoryController::class, 'update']);
             Route::post('/delete/{id}', [CategoryController::class, 'destroy']);
         });
+
+        // Expense
+        Route::group(['prefix' => '/expense'], function () {
+            Route::get('/', [ExpenseController::class, 'books'])->name('books.index');
+            Route::get('/index/{category?}', [ExpenseController::class, 'index']);
+            Route::post('/deposit', [ExpenseController::class, 'deposit']);
+            Route::post('/withdraw/{category?}', [ExpenseController::class, 'withdraw']);
+        });
+
+
+
 
 
     });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Expense;
 use Response;
 use Illuminate\Http\Request;
@@ -9,32 +10,54 @@ use Illuminate\Support\Facades\Auth;
 
 class ExpenseController extends Controller
 {
-    public function index() {
-        $userId = Auth::id();
-        $expenses = Expense::all()->where('user_id', $userId)->sortDesc();
+    public function books()
+    {
+        $books = Category::query()->latest()->get();
 
-        return view('backend.expense', compact('expenses'));
+        return view('backend.books', compact('books'));
     }
 
-    public function add(Request $request) {
-        $id = Auth::id();
+    public function index(Request $request)
+    {
+        $book = $request->get('category');
 
-        $validation = $request->validate([
-           'name' => 'required|min:3|max:255',
-           'cost' => 'required|numeric|regex:/^([\d]{0,5})(\.[\d]{1,2})?$/',    // regex for decimal 2 places
+        return view('backend.expense', compact('book'));
+    }
+
+    public function deposit(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|min:3|max:255',
+            'cost' => 'required|numeric|regex:/^([\d]{0,5})(\.[\d]{1,2})?$/',    // regex for decimal 2 places
         ]);
 
-        Expense::create([
-            'user_id' => $id,
-            'name' => $request->name,
-            'cost' => $request->cost
+        $expense_type = $request->input('expense_type');
+        $cost = $request->input('cost');
+
+        $messages = [
+            $expense_type => null,
+            $expense_type => null,
+        ];
+
+        Expense::query()->create([
+            'name' => $request->input('name'),
+            'cost' => $cost,
+            'expense_type' => $expense_type,
+            'category_id' => $request->input('category'),
+            'user_id' => Auth::id(),
         ]);
 
-        return redirect()->back()->with('success', 'Successful.');
+        $messages = [
+            'deposit' => "$cost Tk Deposit successful",
+            'withdraw' => "$cost Tk Withdraw successful",
+        ];
+
+        return redirect()->back()->with('success', $messages[$expense_type]);
 
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
 
         $request->validate([
             'update_name' => 'required|min:3|max:255',
@@ -43,27 +66,26 @@ class ExpenseController extends Controller
 
         $expense = Expense::find($id);
 
-        if($expense) {
+        if ($expense) {
             $expense->name = $request->update_name;
             $expense->cost = $request->update_cost;
             $expense->save();
 
             return redirect()->back()->with('update-success', 'Expense updated successfully!');
-        }
-        else {
+        } else {
             return redirect()->back()->with('notfound', 'Expense not found to update');
         }
 
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $expense = Expense::find($id);
 
-        if($expense) {
+        if ($expense) {
             $expense->delete();
             return redirect()->back()->with('delete-success', 'Expense deleted successfully!');
-        }
-        else {
+        } else {
             return redirect()->back()->with('delete-failed', 'Expense not found to delete!');
         }
     }

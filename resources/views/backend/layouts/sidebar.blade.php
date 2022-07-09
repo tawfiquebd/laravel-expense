@@ -19,7 +19,13 @@
                 <li class="nav-item">
                     <a href="{{ route('category.index') }}" class="nav-link">
                         <i class="fa fa-tachometer nav-icon"></i>
-                        <p>Create Book</p>
+                        <p>Book</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('books.index') }}" class="nav-link">
+                        <i class="fa fa-tachometer nav-icon"></i>
+                        <p>Expense</p>
                     </a>
                 </li>
 

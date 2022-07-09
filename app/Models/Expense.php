@@ -15,6 +15,7 @@ class Expense extends Model
         'cost',
         'category_id',
         'user_id',
+        'expense_type'
     ];
 
     // An expense belongs to only 1 user
