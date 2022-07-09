@@ -63,7 +63,13 @@ class CategoryController extends Controller
     public function destroy(Request $request)
     {
         $id = $request->get('id');
-        Category::query()->find($id)->delete();
+        $category = Category::query()
+            ->with('expenses', function ($query) {
+                $query->delete();
+            })
+            ->find($id);
+
+        $category->delete();
 
         return redirect()->back()->with('delete', 'Book Deleted Successfully');
     }
