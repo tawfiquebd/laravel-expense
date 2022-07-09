@@ -53,24 +53,44 @@
 
                                     <div class=" form-group">
                                         <label for="name">Name</label>
-                                        <input type="text" class="form-control"
+                                        <input required type="text" class="form-control"
                                                name="name"
                                                id="name">
+
+                                        @if($errors->has('name'))
+                                            <span class="text-danger font-weight-bold">
+                                                {{ $errors->first('name') }}
+                                            </span>
+                                        @endif
                                     </div>
+
 
                                     <div class=" form-group">
                                         <label for="cost">Cost</label>
-                                        <input type="text" class="form-control"
+                                        <input required type="text" class="form-control"
                                                name="cost"
                                                id="cost">
+
+                                        @if($errors->has('cost'))
+                                            <span class="text-danger font-weight-bold">
+                                                {{ $errors->first('cost') }}
+                                            </span>
+                                        @endif
                                     </div>
 
                                     <div class=" form-group">
                                         <label for="expense_type">Expense Type</label>
-                                        <select name="expense_type" id="expense_type" class="form-control">
+                                        <select required name="expense_type" id="expense_type" class="form-control">
+                                            <option value="">--- Select ---</option>
                                             <option value="deposit">Deposit</option>
                                             <option value="withdraw">Withdraw</option>
                                         </select>
+
+                                        @if($errors->has('expense_type'))
+                                            <span class="text-danger font-weight-bold">
+                                                {{ $errors->first('expense_type') }}
+                                            </span>
+                                        @endif
                                     </div>
 
 
@@ -92,39 +112,53 @@
                                     <tr>
                                         <th>SL.</th>
                                         <th>Name</th>
+                                        <th>Cost</th>
+                                        <th>Expense Type</th>
+                                        <th>Book</th>
                                         <th>Created</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {{--@foreach($categories as $category)--}}
-                                    {{--<tr>--}}
-                                    {{--<td>{{ $loop->iteration }}</td>--}}
-                                    {{--<td>{{ $category->name }}</td>--}}
-                                    {{--<td>{{ \Carbon\Carbon::parse($category->created_at)->format('d-m-y h:i:s a') }}</td>--}}
-                                    {{--<td class="d-flex justify-content-around">--}}
-                                    {{--<a class="btn btn-sm btn-warning"--}}
-                                    {{--href="{{ url('/category/edit', $category->id) }}"><i--}}
-                                    {{--class="fa fa-pencil"></i></a>--}}
+                                    @foreach($expenses as $expense)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $expense->name }}</td>
+                                            <td>{{ $expense->cost }}</td>
+                                            @if($expense->expense_type == "withdraw")
+                                            <td>
+                                                <span class="badge badge-pill badge-danger">{{ ucfirst($expense->expense_type) }}</span>
+                                            </td>
+                                            @else
+                                            <td>
+                                                <span class="badge badge-pill badge-success">{{ ucfirst($expense->expense_type) }}</span>
+                                            </td>
+                                            @endif
+                                            <td>{{ $expense->category->name }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($expense->created_at)->format('d-m-y h:i:s a') }}</td>
+                                            <td class="d-flex justify-content-between">
+                                                <a class="btn btn-sm btn-warning"
+                                                   href="{{ url('/category/edit') }}"><i
+                                                        class="fa fa-pencil"></i></a>
 
-                                    {{--<form id="form" action="{{ url('/category/delete', $category->id) }}"--}}
-                                    {{--method="POST">--}}
-                                    {{--@csrf--}}
-                                    {{--<input type="hidden" name="id" value="{{ $category->id }}">--}}
-                                    {{--<button class="btn btn-sm btn-danger"--}}
-                                    {{--onclick="deleteBookFunc()"--}}
-                                    {{--type="button"><i--}}
-                                    {{--class="fa fa-trash-o"></i></button>--}}
-                                    {{--</form>--}}
-                                    {{--</td>--}}
-                                    {{--</tr>--}}
-                                    {{--@endforeach--}}
+                                                <form id="form" action="{{ url('/category/delete') }}"
+                                                      method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="">
+                                                    <button class="btn btn-sm btn-danger"
+                                                            onclick="deleteBookFunc()"
+                                                            type="button"><i
+                                                            class="fa fa-trash-o"></i></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
-                            {{--{{ $categories->links('pagination::bootstrap-4') }}--}}
+                            {{ $expenses->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
                 </div>

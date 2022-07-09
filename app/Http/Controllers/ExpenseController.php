@@ -12,7 +12,11 @@ class ExpenseController extends Controller
 {
     public function books()
     {
-        $books = Category::query()->latest()->get();
+        $books = Category::query()
+            ->with('expenses')
+            ->withCount('expenses')
+            ->latest()
+            ->get();
 
         return view('backend.books', compact('books'));
     }
@@ -20,8 +24,14 @@ class ExpenseController extends Controller
     public function index(Request $request)
     {
         $book = $request->get('category');
+        $expenses = Expense::query()->with([
+            'category',
+            'user',
+        ])
+            ->where('category_id', $book)
+            ->latest()->paginate(10);
 
-        return view('backend.expense', compact('book'));
+        return view('backend.expense', compact('expenses', 'book'));
     }
 
     public function deposit(Request $request)
@@ -29,6 +39,7 @@ class ExpenseController extends Controller
         $request->validate([
             'name' => 'required|min:3|max:255',
             'cost' => 'required|numeric|regex:/^([\d]{0,5})(\.[\d]{1,2})?$/',    // regex for decimal 2 places
+            'expense_type' => 'required',
         ]);
 
         $expense_type = $request->input('expense_type');

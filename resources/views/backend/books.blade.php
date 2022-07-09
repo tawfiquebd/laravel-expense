@@ -47,7 +47,7 @@
                                 <div class="card-body">
                                     <div class="heading">
                                         Created : <span class="badge badge-success"> {{ \Carbon\Carbon::parse($book->created_at)->format('d-m-Y') }}</span> <br>
-                                        Total Expense : <span class="badge badge-warning">10</span>
+                                        Total Expense : <span class="badge badge-warning">{{ $book->expenses_count }}</span>
                                     </div>
 
 
