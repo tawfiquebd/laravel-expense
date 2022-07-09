@@ -38,9 +38,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::group(['prefix' => '/expense'], function () {
             Route::get('/', [ExpenseController::class, 'books'])->name('books.index');
             Route::get('/index/{category?}', [ExpenseController::class, 'index']);
-            Route::post('/deposit', [ExpenseController::class, 'deposit']);
-            Route::post('/withdraw/{category?}', [ExpenseController::class, 'withdraw']);
+            Route::post('/deposit-withdraw', [ExpenseController::class, 'deposit']);
             Route::get('/edit/{id?}/{category?}', [ExpenseController::class, 'edit']);
+            Route::post('/deposit-withdraw/update/{id}', [ExpenseController::class, 'update']);
         });
 
 

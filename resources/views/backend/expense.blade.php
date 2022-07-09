@@ -55,77 +55,88 @@
                                 <h4>Create Expense</h4>
                             </div>
                             <div class="card-body">
-                                <form action="{{ url("/expense/deposit") }}" method="POST">
-                                    @csrf
+                                @if (request()->has('id'))
+                                    <form action="{{ url("/expense/deposit-withdraw/update", $expense->id) }}"
+                                          method="POST">
+                                        @else
+                                            <form action="{{ url("/expense/deposit-withdraw") }}" method="POST">
+                                                @endif
+                                                @csrf
 
-                                    @includeIf('.backend.partials.response-message')
+                                                @includeIf('.backend.partials.response-message')
 
-                                    <input type="hidden" name="category" value="{{ $book }}">
+                                                <input type="hidden" name="category" value="{{ $book }}">
 
-                                    <div class=" form-group">
-                                        <label for="name">Name</label>
-                                        <input required type="text" value="{{ $expense->name ?? '' }}"
-                                               class="form-control"
-                                               name="name"
-                                               id="name">
+                                                <div class=" form-group">
+                                                    <label for="name">Name</label>
+                                                    <input required type="text" value="{{ $expense->name ?? '' }}"
+                                                           class="form-control"
+                                                           name="name"
+                                                           id="name">
 
-                                        @if($errors->has('name'))
-                                            <span class="text-danger font-weight-bold">
+                                                    @if($errors->has('name'))
+                                                        <span class="text-danger font-weight-bold">
                                                 {{ $errors->first('name') }}
                                             </span>
-                                        @endif
-                                    </div>
+                                                    @endif
+                                                </div>
 
-                                    <div class=" form-group">
-                                        <label for="cost">Cost</label>
-                                        <input required type="text" value="{{ $expense->cost ?? '' }}"
-                                               class="form-control"
-                                               name="cost"
-                                               id="cost">
+                                                <div class=" form-group">
+                                                    <label for="cost">Cost</label>
+                                                    <input required type="text" value="{{ $expense->cost ?? '' }}"
+                                                           class="form-control"
+                                                           name="cost"
+                                                           id="cost">
 
-                                        @if($errors->has('cost'))
-                                            <span class="text-danger font-weight-bold">
+                                                    @if($errors->has('cost'))
+                                                        <span class="text-danger font-weight-bold">
                                                 {{ $errors->first('cost') }}
                                             </span>
-                                        @endif
-                                    </div>
+                                                    @endif
+                                                </div>
 
                                     <div class=" form-group">
                                         <label for="created_at">Date</label>
-                                        <input required type="date" value="{{ $expense ? \Carbon\Carbon::parse($expense->created_at)->format('m/d/Y') : ''  }}"
+                                        <input required type="date" value="{{ $expense ? \Carbon\Carbon::parse($expense->created_at)->format('Y-m-d') : ''  }}"
                                                class="form-control"
                                                name="created_at"
                                                id="created_at">
 
-                                        @if($errors->has('created_at'))
-                                            <span class="text-danger font-weight-bold">
+                                                    @if($errors->has('created_at'))
+                                                        <span class="text-danger font-weight-bold">
                                                 {{ $errors->first('created_at') }}
                                             </span>
-                                        @endif
-                                    </div>
+                                                    @endif
+                                                </div>
 
-                                    <div class=" form-group">
-                                        <label for="expense_type">Expense Type</label>
-                                        <select required name="expense_type" id="expense_type" class="form-control">
-                                            <option value="">--- Select ---</option>
-                                            @if($expense && $expense->expense_type == 'deposit')
-                                                <option selected value="deposit">Deposit</option>
-                                            @else
-                                                <option selected value="withdraw"> Withdraw </option>
-                                            @endif
-                                        </select>
+                                                <div class=" form-group">
+                                                    <label for="expense_type">Expense Type</label>
+                                                    <select required name="expense_type" id="expense_type"
+                                                            class="form-control">
+                                                        <option value="">--- Select ---</option>
+                                                        @if($expense && $expense->expense_type == 'deposit')
+                                                            <option selected value="deposit">Deposit</option>
+                                                            <option value="withdraw"> Withdraw</option>
+                                                        @elseif($expense && $expense->expense_type == 'withdraw')
+                                                            <option selected value="withdraw"> Withdraw</option>
+                                                            <option value="deposit">Deposit</option>
+                                                        @else
+                                                            <option value="deposit">Deposit</option>
+                                                            <option value="withdraw"> Withdraw</option>
+                                                        @endif
+                                                    </select>
 
-                                        @if($errors->has('expense_type'))
-                                            <span class="text-danger font-weight-bold">
+                                                    @if($errors->has('expense_type'))
+                                                        <span class="text-danger font-weight-bold">
                                                 {{ $errors->first('expense_type') }}
                                             </span>
-                                        @endif
-                                    </div>
+                                                    @endif
+                                                </div>
 
 
-                                    <button type="submit" class="btn btn-sm btn-info">Proceed</button>
+                                                <button type="submit" class="btn btn-sm btn-info">Proceed</button>
 
-                                </form>
+                                            </form>
                             </div>
                         </div>
                     </div>

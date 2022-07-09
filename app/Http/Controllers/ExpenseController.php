@@ -132,22 +132,27 @@ class ExpenseController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $request->validate([
-            'update_name' => 'required|min:3|max:255',
-            'update_cost' => 'required|numeric|regex:/^([\d]{0,5})(\.[\d]{1,2})?$/'
+            'name' => 'required|min:3|max:255',
+            'cost' => 'required|numeric|regex:/^([\d]{0,10})(\.[\d]{1,2})?$/',
+            'expense_type' => 'required',
+            'created_at' => 'required',
         ]);
 
-        $expense = Expense::find($id);
+        $expense = Expense::query()->find($id);
+        $categoryId = $request->category;
 
         if ($expense) {
-            $expense->name = $request->update_name;
-            $expense->cost = $request->update_cost;
+            $expense->name = $request->name;
+            $expense->cost = $request->cost;
+            $expense->created_at = $request->created_at;
+            $expense->category_id = $categoryId;
+            $expense->expense_type = $request->expense_type;
             $expense->save();
 
-            return redirect()->back()->with('update-success', 'Expense updated successfully!');
+            return redirect("/expense/index?category=$categoryId")->with('success', 'Expense updated successfully!');
         } else {
-            return redirect()->back()->with('notfound', 'Expense not found to update');
+            return redirect()->back()->with('error', 'Expense not found to update');
         }
 
     }
