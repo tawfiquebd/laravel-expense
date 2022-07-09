@@ -8,6 +8,14 @@
         .btn {
             padding: 2px 7px;
         }
+        table {
+            width: 100%;
+        }
+        table th,
+        table td {
+            border: 1px solid #000;
+            text-align: center;
+        }
     </style>
 
 @endsection
@@ -102,59 +110,80 @@
                     </div>
 
                     <div class="col-lg-8 col-md-8 col-sm-8">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Expense List</h4>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th>SL.</th>
-                                        <th>Name</th>
-                                        <th>Cost</th>
-                                        <th>Expense Type</th>
-                                        <th>Book</th>
-                                        <th>Created</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($expenses as $expense)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $expense->name }}</td>
-                                            <td>{{ $expense->cost }}</td>
-                                            @if($expense->expense_type == "withdraw")
-                                            <td>
-                                                <span class="badge badge-pill badge-danger">{{ ucfirst($expense->expense_type) }}</span>
-                                            </td>
-                                            @else
-                                            <td>
-                                                <span class="badge badge-pill badge-success">{{ ucfirst($expense->expense_type) }}</span>
-                                            </td>
-                                            @endif
-                                            <td>{{ $expense->category->name }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($expense->created_at)->format('d-m-y h:i:s a') }}</td>
-                                            <td class="d-flex justify-content-between">
-                                                <a class="btn btn-sm btn-warning"
-                                                   href="{{ url('/category/edit') }}"><i
-                                                        class="fa fa-pencil"></i></a>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Balance Summary <i class="fa fa-usd"></i></h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5>Total Deposit: <span class="badge badge-success">{{ number_format($totalBalance['deposit'], 2) }}</span> BDT /=</h5>
+                                        <h5>Total Withdraw: <span class="badge badge-warning">{{ number_format($totalBalance['withdraw'], 2) }}</span> BDT /=</h5>
+                                        <h5>Available Balance: <span class="badge badge-danger">{{ number_format($totalBalance['available_balance'], 2) }}</span> BDT /=</h5>
 
-                                                <form id="form" action="{{ url('/category/delete') }}"
-                                                      method="POST">
-                                                    @csrf
-                                                    <input type="hidden" name="id" value="">
-                                                    <button class="btn btn-sm btn-danger"
-                                                            onclick="deleteBookFunc()"
-                                                            type="button"><i
-                                                            class="fa fa-trash-o"></i></button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                                        <h6 class="text-danger">{{ $totalBalance['lowerBalance'] }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Expense List</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <table>
+                                            <thead>
+                                            <tr>
+                                                <th>SL.</th>
+                                                <th>Name</th>
+                                                <th>Cost</th>
+                                                <th>Expense Type</th>
+                                                <th>Book</th>
+                                                <th>Date</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($expenses as $expense)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ ucfirst($expense->name) }}</td>
+                                                    <td>{{ number_format($expense->cost, 2) }} BDT /=</td>
+                                                    @if($expense->expense_type == "withdraw")
+                                                        <td>
+                                                            <span class="badge badge-pill badge-danger">{{ ucfirst($expense->expense_type) }}</span>
+                                                        </td>
+                                                    @else
+                                                        <td>
+                                                            <span class="badge badge-pill badge-success">{{ ucfirst($expense->expense_type) }}</span>
+                                                        </td>
+                                                    @endif
+                                                    <td>{{ $expense->category->name }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($expense->created_at)->format('d-m-y h:i:s a') }}</td>
+                                                    <td class="d-flex justify-content-between">
+                                                        <a class="btn btn-sm btn-warning"
+                                                           href="{{ url('/category/edit') }}"><i
+                                                                class="fa fa-pencil"></i></a>
+
+                                                        <form id="form" action="{{ url('/category/delete') }}"
+                                                              method="POST">
+                                                            @csrf
+                                                            <input type="hidden" name="id" value="">
+                                                            <button class="btn btn-sm btn-danger"
+                                                                    onclick="deleteBookFunc()"
+                                                                    type="button"><i
+                                                                    class="fa fa-trash-o"></i></button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">

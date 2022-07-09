@@ -24,14 +24,46 @@ class ExpenseController extends Controller
     public function index(Request $request)
     {
         $book = $request->get('category');
-        $expenses = Expense::query()->with([
+        $query = Expense::query();
+        $expenses = $query->with([
             'category',
             'user',
         ])
             ->where('category_id', $book)
             ->latest()->paginate(10);
 
-        return view('backend.expense', compact('expenses', 'book'));
+        $totalBalance = $this->totalBalance($book);
+
+        return view('backend.expense', compact('expenses', 'book', 'totalBalance'));
+    }
+
+    private function totalBalance($categoryId)
+    {
+        $query = Expense::query()->get();
+        $deposit = $query->where('expense_type', 'deposit')
+            ->where('category_id', $categoryId)
+            ->sum('cost');
+
+        $withdraw = $query->where('expense_type', 'withdraw')
+            ->where('category_id', $categoryId)
+            ->sum('cost');
+
+        $available_balance = $deposit - $withdraw;
+
+        $balanceRatio = ($deposit * 30) / 100;
+        $lowerBalance = null;
+        if ($available_balance <= $balanceRatio) {
+            $lowerBalance = "Your remaining balance is low";
+        }
+
+        $balance = [
+            'deposit' => $deposit,
+            'withdraw' => $withdraw,
+            'available_balance' => $available_balance,
+            'lowerBalance' => $lowerBalance,
+        ];
+
+        return $balance;
     }
 
     public function deposit(Request $request)

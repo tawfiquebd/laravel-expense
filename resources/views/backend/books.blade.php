@@ -54,12 +54,6 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="mt-3 d-flex justify-content-around">
-                                        {{--<a title="Deposit" href="{{ url("/expense/view?category=$book->id") }}" class="btn btn-info"> <i--}}
-                                                {{--class="fa fa-plus-square"></i> </a>--}}
-                                        {{--<a title="Withdraw" href="{{ url("/expense/view?category=$book->id") }}" class="btn btn-danger"> <i--}}
-                                                {{--class="fa fa-minus-circle"></i> </a>--}}
-                                        {{--<a title="View Expense" href="{{ url("/expense/view?category=$book->id") }}" class="btn btn-dark"> <i--}}
-                                                {{--class="fa fa-eye"></i></a>--}}
                                         <a class="btn btn-primary" href="{{ url("/expense/index?category=$book->id") }}">Make an Expense</a>
                                     </div>
                                 </div>

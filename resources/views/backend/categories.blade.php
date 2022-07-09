@@ -74,7 +74,7 @@
                                     <tr>
                                         <th>SL.</th>
                                         <th>Name</th>
-                                        <th>Created</th>
+                                        <th>Date</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
