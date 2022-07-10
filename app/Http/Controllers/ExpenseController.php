@@ -157,15 +157,19 @@ class ExpenseController extends Controller
 
     }
 
-    public function delete($id)
+    public function destroy(Request $request)
     {
-        $expense = Expense::find($id);
+        dd($request->all());
+        exit();
+        $expense = Expense::query()->where('id', $request->get('id'))->where('category_id', $request->get('category'))->first();
+        dd($expense);
+        exit();
 
         if ($expense) {
             $expense->delete();
-            return redirect()->back()->with('delete-success', 'Expense deleted successfully!');
+            return redirect()->back()->with('success', 'Expense deleted successfully!');
         } else {
-            return redirect()->back()->with('delete-failed', 'Expense not found to delete!');
+            return redirect()->back()->with('warning', 'Expense not found to delete!');
         }
     }
 

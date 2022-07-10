@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('/deposit-withdraw', [ExpenseController::class, 'deposit']);
             Route::get('/edit/{id?}/{category?}', [ExpenseController::class, 'edit']);
             Route::post('/deposit-withdraw/update/{id}', [ExpenseController::class, 'update']);
+            Route::post('/delete/{id?}/{category?}', [ExpenseController::class, 'destroy']);
         });
 
 

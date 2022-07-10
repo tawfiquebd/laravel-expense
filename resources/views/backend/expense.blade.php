@@ -95,12 +95,13 @@
                                                     @endif
                                                 </div>
 
-                                    <div class=" form-group">
-                                        <label for="created_at">Date</label>
-                                        <input required type="date" value="{{ $expense ? \Carbon\Carbon::parse($expense->created_at)->format('Y-m-d') : ''  }}"
-                                               class="form-control"
-                                               name="created_at"
-                                               id="created_at">
+                                                <div class=" form-group">
+                                                    <label for="created_at">Date</label>
+                                                    <input required type="date"
+                                                           value="{{ $expense ? \Carbon\Carbon::parse($expense->created_at)->format('Y-m-d') : ''  }}"
+                                                           class="form-control"
+                                                           name="created_at"
+                                                           id="created_at">
 
                                                     @if($errors->has('created_at'))
                                                         <span class="text-danger font-weight-bold">
@@ -208,12 +209,14 @@
                                                            href="{{ url("/expense/edit/?id=$expense->id&category={$expense->category->id}") }}"><i
                                                                 class="fa fa-pencil"></i></a>
 
-                                                        <form id="form" action="{{ url('/category/delete') }}"
+                                                        <form id="form" action="{{ url("/expense/delete?id=$expense->id&category=$expense->category->id") }}"
                                                               method="POST">
                                                             @csrf
-                                                            <input type="hidden" name="id" value="">
-                                                            <button class="btn btn-sm btn-danger"
-                                                                    onclick="deleteBookFunc()"
+
+                                                            <input type="hidden" name="expense_id" value="{{ $expense->id }}">
+
+                                                            <button data-id="{{ $expense->id }}" class="btn btn-sm btn-danger"
+                                                                    onclick="deleteExpense()"
                                                                     type="button"><i
                                                                     class="fa fa-trash-o"></i></button>
                                                         </form>
@@ -238,5 +241,32 @@
 @endsection
 
 @section('scripts')
+    <script type="text/javascript">
+        function deleteExpense() {
+            var form = document.getElementById('form');
+            Swal.fire({
+                title: 'Are you sure to delete this Expense?',
+                text: "Deleted item can't be recovered",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
 
+            }).then((result) => {
+                if(result.isConfirmed){
+                form.submit();
+                setTimeout(function () {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your expense has been deleted.',
+                        'success'
+                    )
+                }, 500)
+
+            }
+        })
+            ;
+        }
+    </script>
 @endsection
