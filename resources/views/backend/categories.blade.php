@@ -52,10 +52,6 @@
                                                     <input type="text" class="form-control"
                                                            value="{{ $category ? $category->name : '' }}" name="name"
                                                            id="name">
-
-                                                    @if($errors->has('name'))
-                                                        <b class="text-danger">{{ $errors->first('name') }}</b>
-                                                    @endif
                                                 </div>
                                                 @if(request()->is('category/*'))
                                                     <button type="submit" class="btn btn-sm btn-info">Update</button>
@@ -78,7 +74,7 @@
                                     <tr>
                                         <th>SL.</th>
                                         <th>Name</th>
-                                        <th>Date</th>
+                                        <th>Created</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
@@ -126,8 +122,9 @@
 
         // Sweet alert
 
-        function deleteBookFunc(e) {
-            var form = document.getElementById('form');
+        function deleteBookFunc(id) {
+            var button = document.getElementById('button'+id);
+
             Swal.fire({
                 title: 'Are you sure to delete this Book?',
                 text: "All expenses under this book will be deleted!",
@@ -141,7 +138,7 @@
                 if(result.isConfirmed
         )
             {
-                form.submit();
+                button.closest('form').submit();
                 setTimeout(function () {
                     Swal.fire(
                         'Deleted!',
