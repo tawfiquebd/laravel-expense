@@ -93,8 +93,8 @@
                                                       method="POST">
                                                     @csrf
                                                     <input type="hidden" name="id" value="{{ $category->id }}">
-                                                    <button class="btn btn-sm btn-danger"
-                                                            onclick="deleteBookFunc()"
+                                                    <button id="button{{ $category->id }}" class="btn btn-sm btn-danger"
+                                                            onclick="deleteBookFunc({{ $category->id }})"
                                                             type="button"><i
                                                             class="fa fa-trash-o"></i></button>
                                                 </form>
