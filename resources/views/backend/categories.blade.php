@@ -89,15 +89,18 @@
                                                    href="{{ url('/category/edit', $category->id) }}"><i
                                                         class="fa fa-pencil"></i></a>
 
-                                                <form id="form" action="{{ url('/category/delete', $category->id) }}"
+                                                <form id="form"
+                                                      action="{{ url('/category/delete', $category->id) }}"
                                                       method="POST">
                                                     @csrf
                                                     <input type="hidden" name="id" value="{{ $category->id }}">
-                                                    <button class="btn btn-sm btn-danger"
-                                                            onclick="deleteBookFunc()"
+
+                                                    <button id="button{{ $category->id }}" class="btn btn-sm btn-danger"
+                                                            onclick="deleteBookFunc({{ $category->id }})"
                                                             type="button"><i
                                                             class="fa fa-trash-o"></i></button>
                                                 </form>
+
                                             </td>
                                         </tr>
                                     @endforeach
@@ -122,8 +125,9 @@
 
         // Sweet alert
 
-        function deleteBookFunc(e) {
-            var form = document.getElementById('form');
+        function deleteBookFunc(id) {
+            var button = document.getElementById('button'+id);
+
             Swal.fire({
                 title: 'Are you sure to delete this Book?',
                 text: "All expenses under this book will be deleted!",
@@ -133,21 +137,23 @@
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, delete it!'
 
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                    form.submit();
-                    setTimeout(function () {
-                        Swal.fire(
-                            'Deleted!',
-                            'Your book has been deleted.',
-                            'success'
-                        )
-                    }, 500)
+            }).then((result) => {
+                if(result.isConfirmed
+        )
+            {
+                button.closest('form').submit();
+                setTimeout(function () {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your book has been deleted.',
+                        'success'
+                    )
+                }, 500)
 
-                }
-            });
+            }
+        })
+            ;
         }
-
 
 
     </script>
