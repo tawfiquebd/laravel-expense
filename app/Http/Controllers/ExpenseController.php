@@ -159,11 +159,7 @@ class ExpenseController extends Controller
 
     public function destroy(Request $request)
     {
-        dd($request->all());
-        exit();
         $expense = Expense::query()->where('id', $request->get('id'))->where('category_id', $request->get('category'))->first();
-        dd($expense);
-        exit();
 
         if ($expense) {
             $expense->delete();

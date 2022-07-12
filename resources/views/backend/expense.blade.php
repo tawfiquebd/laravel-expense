@@ -209,14 +209,14 @@
                                                            href="{{ url("/expense/edit/?id=$expense->id&category={$expense->category->id}") }}"><i
                                                                 class="fa fa-pencil"></i></a>
 
-                                                        <form id="form" action="{{ url("/expense/delete?id=$expense->id&category=$expense->category->id") }}"
+                                                        <form id="form" action="{{ url("/expense/delete?id=$expense->id&category=$book") }}"
                                                               method="POST">
                                                             @csrf
 
                                                             <input type="hidden" name="expense_id" value="{{ $expense->id }}">
 
-                                                            <button data-id="{{ $expense->id }}" class="btn btn-sm btn-danger"
-                                                                    onclick="deleteExpense()"
+                                                            <button id="button{{ $expense->id }}" class="btn btn-sm btn-danger"
+                                                                    onclick="deleteExpense({{ $expense->id }})"
                                                                     type="button"><i
                                                                     class="fa fa-trash-o"></i></button>
                                                         </form>
@@ -242,11 +242,14 @@
 
 @section('scripts')
     <script type="text/javascript">
-        function deleteExpense() {
-            var form = document.getElementById('form');
+        // Sweet alert
+
+        function deleteExpense(id) {
+            var button = document.getElementById('button'+id);
+
             Swal.fire({
-                title: 'Are you sure to delete this Expense?',
-                text: "Deleted item can't be recovered",
+                title: 'Are you sure to delete this Book?',
+                text: "All expenses under this book will be deleted!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -254,12 +257,14 @@
                 confirmButtonText: 'Yes, delete it!'
 
             }).then((result) => {
-                if(result.isConfirmed){
-                form.submit();
+                if(result.isConfirmed
+        )
+            {
+                button.closest('form').submit();
                 setTimeout(function () {
                     Swal.fire(
                         'Deleted!',
-                        'Your expense has been deleted.',
+                        'Your book has been deleted.',
                         'success'
                     )
                 }, 500)
