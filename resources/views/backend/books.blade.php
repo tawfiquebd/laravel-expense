@@ -38,7 +38,7 @@
             <div class="container-fluid">
                 <!-- Small boxes (Stat box) -->
                 <div class="row">
-                    @foreach($books as $book)
+                    @forelse($books as $book)
                         <div class="col-md-3">
                             <div class="card">
                                 <div class="card-header">
@@ -59,7 +59,20 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4 mt-5">
+                            <div class="card">
+                                <div class="card-heading mt-3">
+                                    <h4 class="text-center">No Books Found</h4>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="text-center"><a href="{{ route('category.index') }}">Create a Book</a></h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4"></div>
+                    @endforelse
                 </div>
             </div>
         </section>
