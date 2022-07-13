@@ -42,7 +42,7 @@
                                     <form action="{{ url('/category/update', $category->id) }}" method="POST">
                                         @else
                                             <form action="{{ route('category.store') }}" method="POST">
-                                                @endif
+                                        @endif
                                                 @csrf
 
                                                 @includeIf('.backend.partials.response-message')
@@ -79,7 +79,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($categories as $category)
+                                    @forelse($categories as $category)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $category->name }}</td>
@@ -100,7 +100,9 @@
                                                 </form>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <p class="text-bold text-center">No Data Found</p>
+                                    @endforelse
                                     </tbody>
                                 </table>
                             </div>
