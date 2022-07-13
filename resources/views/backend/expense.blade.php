@@ -186,7 +186,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($expenses as $expense)
+                                            @forelse($expenses as $expense)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ ucfirst($expense->name) }}</td>
@@ -222,7 +222,9 @@
                                                         </form>
                                                     </td>
                                                 </tr>
-                                            @endforeach
+                                                @empty
+                                                    <p class="text-bold text-center">No Data Found</p>
+                                            @endforelse
                                             </tbody>
                                         </table>
                                     </div>
