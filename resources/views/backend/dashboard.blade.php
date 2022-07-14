@@ -35,14 +35,14 @@
                     <!-- small box -->
                     <div class="small-box bg-primary">
                         <div class="inner">
-                            <h3> {{ $expenseByToday[0] ?? 0 }} <sup style="font-size: 20px">Tk</sup></h3>
+                            <h3> 0 <sup style="font-size: 20px">Tk</sup></h3>
 
                             <p>Expense Today</p>
                         </div>
                         <div class="icon">
                             <i class="fa fa-calendar-o"></i>
                         </div>
-                        <a href="{{ route('report.daily') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -50,15 +50,13 @@
                     <!-- small box -->
                     <div class="small-box bg-success">
                         <div class="inner">
-                            @foreach($expenseByWeek as $week)
-                            <h3>{{ $week->total ?? '0' }} <sup style="font-size: 20px">Tk</sup></h3>
-                            @endforeach
+                            <h3>0 <sup style="font-size: 20px">Tk</sup></h3>
                             <p>Expense This Week</p>
                         </div>
                         <div class="icon">
                             <i class="fa fa-calendar-check-o"></i>
                         </div>
-                        <a href="{{ route('report.weekly') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -66,15 +64,13 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            @foreach($expenseByMonth as $month)
-                            <h3> {{ $month->total ?? '0' }} <sup style="font-size: 20px">Tk</sup></h3>
-                            @endforeach
+                            <h3> 0 <sup style="font-size: 20px">Tk</sup></h3>
                             <p>Expense This month</p>
                         </div>
                         <div class="icon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        <a href="{{ route('report.monthly') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
