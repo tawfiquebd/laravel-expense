@@ -18,6 +18,7 @@
             border: 1px solid #000;
             text-align: center;
             padding: 2px;
+            font-size: 14px;
         }
     </style>
 

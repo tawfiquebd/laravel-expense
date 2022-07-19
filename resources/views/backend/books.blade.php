@@ -84,36 +84,6 @@
 
     <script>
 
-        // Sweet alert
-
-        function deleteBookFunc(e) {
-            var form = document.getElementById('form');
-            Swal.fire({
-                title: 'Are you sure to delete this Book?',
-                text: "All expenses under this book will be deleted!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-
-            }).then((result) = > {
-                if(result.isConfirmed
-        )
-            {
-                form.submit();
-                setTimeout(function () {
-                    Swal.fire(
-                        'Deleted!',
-                        'Your book has been deleted.',
-                        'success'
-                    )
-                }, 500)
-
-            }
-        });
-        }
-
 
     </script>
 

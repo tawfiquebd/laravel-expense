@@ -3,7 +3,21 @@
 @section('title', 'Categories')
 
 @section('style')
+    <style>
 
+        table {
+            width: 100%;
+        }
+
+        table th,
+        table td {
+            border: 1px solid #000;
+            text-align: center;
+            padding: 2px;
+            font-size: 14px;
+        }
+
+    </style>
 @endsection
 
 @section('content')
@@ -69,7 +83,7 @@
                                 <h4>Book List</h4>
                             </div>
                             <div class="card-body">
-                                <table class="table table-bordered">
+                                <table >
                                     <thead>
                                     <tr>
                                         <th>SL.</th>
