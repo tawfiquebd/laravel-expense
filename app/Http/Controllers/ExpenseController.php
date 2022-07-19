@@ -55,11 +55,7 @@ class ExpenseController extends Controller
 
         $available_balance = $deposit - $withdraw;
 
-        $balanceRatio = $deposit * 30 / 100;
-        $lowerBalance = null;
-        if (($deposit > $available_balance) && ($available_balance < $balanceRatio)) {
-            $lowerBalance = "Your remaining balance is low";
-        }
+        $lowerBalance = $this->calculateLowBalance($deposit, $available_balance);
 
         $balance = [
             'deposit' => $deposit,
@@ -69,6 +65,19 @@ class ExpenseController extends Controller
         ];
 
         return $balance;
+    }
+
+    private function calculateLowBalance($deposit, $available_balance)
+    {
+        $balanceRatio = $deposit * 30 / 100;
+        $lowerBalance = "";
+
+        // NB: IF (0 > -2000) -> true && (-2000 < 0 ) -> true
+        if (($deposit > $available_balance) && ($available_balance < $balanceRatio)) {
+            $lowerBalance = "Your remaining balance is low";
+        }
+
+        return $lowerBalance;
     }
 
     public function deposit(Request $request)
