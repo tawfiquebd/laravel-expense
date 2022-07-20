@@ -94,10 +94,6 @@ class ExpenseController extends Controller
         $time = date('H:i:s', time());
         $date = $request->input('created_at') . " " . $time;
 
-        $messages = [
-            $expense_type => null,
-        ];
-
         Expense::query()->create([
             'name' => $request->input('name'),
             'cost' => $cost,
