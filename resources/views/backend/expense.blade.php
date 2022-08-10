@@ -181,7 +181,7 @@
                                                 <th>Name</th>
                                                 <th>Cost</th>
                                                 <th>Expense Type</th>
-                                                <th>Book</th>
+                                                <th>Category</th>
                                                 <th>Date</th>
                                                 <th>Actions</th>
                                             </tr>

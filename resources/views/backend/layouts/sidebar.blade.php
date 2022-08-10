@@ -19,7 +19,7 @@
                 <li class="nav-item">
                     <a href="{{ route('category.index') }}" class="nav-link">
                         <i class="fa fa-tachometer nav-icon"></i>
-                        <p>Book</p>
+                        <p>Category</p>
                     </a>
                 </li>
                 <li class="nav-item">

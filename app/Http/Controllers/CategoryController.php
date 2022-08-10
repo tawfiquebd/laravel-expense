@@ -25,6 +25,9 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|min:3|max:255',
+        ],
+        [
+            'name.required' => "Category name can't be empty!",
         ]);
 
         try {
