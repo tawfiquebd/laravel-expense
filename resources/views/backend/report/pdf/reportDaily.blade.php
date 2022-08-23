@@ -21,41 +21,41 @@
 <div class="container">
     <header>
         <br>
-        <h1 style="text-align: center;">Daily Report</h1>
+        <h1 style="text-align: center;">Expense Manager</h1>
+        <h3 style="text-align: center;">Daily Report</h3>
     </header>
 
     <div class="report-body">
         <br>
 
-        <table style="width: 60%;
+        <table style="width: 70%;
                 margin: 0 auto;
                 text-align: left;
                 border-collapse: collapse;
         ">
+            {{--<tr>--}}
+            {{--<th style="width: 22%;">Expense Category : </th>--}}
+            {{--<td style="width: 22%;"> </td>--}}
+            {{--</tr>--}}
+
             <tr>
-                <th style="width: 22%;">Expense Category :</th>
-                <td style="width: 22%;">{{ $datas['date'] }}</td>
+                <th style="width: 32%;">Date :</th>
+                <td style="width: 32%;">{{ $date }}</td>
             </tr>
 
             <tr>
-                <td style="width: 22%;">{{ $datas['date'] }}</td>
-            </tr>
-
-            <tr>
-                <th style="border: 1px solid #000;">Opening Balance</th>
                 <th style="border: 1px solid #000;">Total Cash in</th>
                 <th style="border: 1px solid #000;">Total Cash out</th>
                 <th style="border: 1px solid #000;">Final Balance</th>
             </tr>
             <tr>
-                <th style="border: 1px solid #000;">{{ 00 }}</th>
-                <th style="border: 1px solid #000;">{{ $datas['totalDepositAmount'] }}</th>
-                <th style="border: 1px solid #000;">{{ $datas['totalCashOutAmount'] }}</th>
-                <th style="border: 1px solid #000;">{{ $datas['finalAvailableBalance'] }}</th>
+                <th style="border: 1px solid #000;">{{ $totalDepositAmount }}</th>
+                <th style="border: 1px solid #000;">{{ $totalCashOutAmount }}</th>
+                <th style="border: 1px solid #000;">{{ $finalAvailableBalance }}</th>
             </tr>
         </table>
 
-        <table style="width: 60%;
+        <table style="width: 70%;
                 margin: 0 auto;
                 text-align: left;
                 border-collapse: collapse;
@@ -69,17 +69,16 @@
                 <th style="border: 1px solid #000;">Expense Type</th>
                 <th style="border: 1px solid #000;">Deposit</th>
                 <th style="border: 1px solid #000;">Withdraw</th>
-                <th style="border: 1px solid #000;">Balance</th>
             </tr>
 
             @php
                 $i = 1;
             @endphp
 
-            @foreach($datas['expenses'] as $expense)
+            @foreach($expenses as $expense)
                 <tr>
                     <td style="border: 1px solid #000;">{{ $i++ }}</td>
-                    <td style="border: 1px solid #000;">{{ \Carbon\Carbon::parse($datas['date'])->format('d-M-Y') }}</td>
+                    <td style="border: 1px solid #000;">{{ \Carbon\Carbon::parse($date)->format('d-M-Y') }}</td>
                     <td style="border: 1px solid #000;">{{ ucfirst($expense->name) }}</td>
                     <td style="border: 1px solid #000;">{{ ucfirst($expense->expense_type) }}</td>
                     @if ($expense->expense_type == "deposit")
@@ -93,19 +92,36 @@
                     @else
                         <td style="border: 1px solid #000;"></td>
                     @endif
-                    <td style="border: 1px solid #000;"></td>
                 </tr>
             @endforeach
         </table>
+
+        <table style="width: 70%;
+                margin: 0 auto;
+                text-align: left;
+                border-collapse: collapse;
+                margin-top: 20px;
+        ">
+            <tr>
+                <td colspan="6" style="border: 1px solid #000;">Total Available Balance</td>
+                <td style="border: 1px solid #000;">{{ $finalAvailableBalance }} TK.</td>
+            </tr>
+        </table>
     </div>
 
-    <table class="balance">
-        {{--@foreach($totalCost as $cost)--}}
-        {{--<tr>--}}
-        {{--<th><span >Total</span></th>--}}
-        {{--<td><span>{{ $cost->total }}</span></td>--}}
-        {{--</tr>--}}
-        {{--@endforeach--}}
+    <br> <br>
+
+    <table style="width: 70%;
+                margin: 0 auto;
+                text-align: left;
+                border-collapse: collapse;
+         ">
+
+        <tr>
+            <th style="width: 50%;">System Generated Report</th>
+            <th style="width: 50%;">Generated at {{ date('d-M-Y') }}</th>
+        </tr>
+
     </table>
 
 </div>

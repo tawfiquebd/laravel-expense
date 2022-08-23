@@ -178,7 +178,7 @@ class ReportController extends Controller
         ];
 
 
-        return view('backend.report.pdf.reportDaily', ['datas' => $datas]);
+//        return view('backend.report.pdf.reportDaily', ['datas' => $datas]);
 
 
 //        dd($datas['date']);
