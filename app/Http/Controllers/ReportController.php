@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Expense;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -9,30 +10,44 @@ use mysql_xdevapi\Table;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Exception;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReportController extends Controller
 {
+//    public function reportDaily() {
+//
+//        $date = new \DateTime('tomorrow -1 year'); // from last 1 month till today
+//
+//        \DB::statement("SET SQL_MODE=''");
+//
+//        $days = Expense::select(array(
+//            DB::raw('date(created_at) as date'),
+//            DB::raw('sum(cost) as total')
+//        ))
+//            ->where('user_id', Auth::id())
+//            ->where('created_at', '>', $date)
+//            ->groupBy('date')
+//            ->orderBy('date', 'DESC')
+//            ->pluck('total', 'date');
+//
+//        return view('backend.report.reportDaily', compact('days'));
+//    }
+
+
     public function reportDaily() {
 
-        $date = new \DateTime('tomorrow -1 year'); // from last 1 month till today
+        $categories = Category::query()
+            ->with('expenses')
+            ->withCount('expenses')
+            ->latest()
+            ->get();
 
-        \DB::statement("SET SQL_MODE=''");
-
-        $days = Expense::select(array(
-            DB::raw('date(created_at) as date'),
-            DB::raw('sum(cost) as total')
-        ))
-            ->where('user_id', Auth::id())
-            ->where('created_at', '>', $date)
-            ->groupBy('date')
-            ->orderBy('date', 'DESC')
-            ->pluck('total', 'date');
-
-        return view('backend.report.reportDaily', compact('days'));
+        return view('backend.report.expenseCategoryWiseReport', compact('categories'));
     }
 
-    public function printDailyReport($date) {
+    public function printDailyReport(Request $request) {
         $userDetails = Auth::user();
+        $date = $request->get('date');
         $isValidDate = $this->isDate($date);
 
         try {
@@ -53,7 +68,8 @@ class ReportController extends Controller
                 $expenses = DB::table('expenses')
                     ->where('user_id', Auth::id())
                     ->where('created_at', 'like', "$date%")
-                    ->get();
+                    ->where('category_id', $category)
+                    ->dd();
 
                 return view('backend.report.printDailyReport', compact('expenses', 'date', 'userDetails', 'totalCost'));
             }
@@ -105,6 +121,107 @@ class ReportController extends Controller
             ->latest()
             ->get();
         return view('backend.report.reportMonthly', compact('expenseByMonth'));
+    }
+
+
+    // Report PDF Download
+    public function dailyReportDownloadPdf($date)
+    {
+
+        $userDetails = Auth::user();
+        $isValidDate = $this->isDate($date);
+
+        if($isValidDate) {
+            \DB::statement("SET SQL_MODE=''");
+
+            // Get total cost
+            $totalCost = Expense::select(array(
+                DB::raw('date(created_at) as date'),
+                DB::raw('sum(cost) as total')
+            ))
+                ->where('user_id', Auth::id())
+                ->where('created_at', 'like', "$date%")
+//                    ->pluck('total', 'date')
+                ->get(['total', 'date']);
+
+            // Get single expense data
+            $expenses = DB::table('expenses')
+                ->where('user_id', Auth::id())
+                ->where('created_at', 'like', "$date%")
+                ->get();
+        }
+
+        $totalDepositAmount = Expense::query()
+            ->where('user_id', Auth::id())
+            ->where('created_at', 'like', "$date%")
+            ->where('expense_type', "deposit")
+            ->sum('cost');
+
+        $totalCashOutAmount = Expense::query()
+            ->where('user_id', Auth::id())
+            ->where('created_at', 'like', "$date%")
+            ->where('expense_type', "withdraw")
+            ->sum('cost');
+
+        $finalAvailableBalance = $totalDepositAmount - $totalCashOutAmount;
+
+
+
+        $datas = [
+            "date" => $date,
+            "expenses" => $expenses,
+            "userDetails" => $userDetails,
+            "totalCost" => $totalCost,
+            "totalDepositAmount" => $totalDepositAmount,
+            "totalCashOutAmount" => $totalCashOutAmount,
+            "finalAvailableBalance" => $finalAvailableBalance,
+        ];
+
+
+        return view('backend.report.pdf.reportDaily', ['datas' => $datas]);
+
+
+//        dd($datas['date']);
+
+        $pdf = Pdf::loadView('backend.report.pdf.reportDaily', $datas);
+
+        return $pdf->stream('invoice.pdf');
+
+    }
+
+
+    public function reportDailyCategoryWise(Request $request)
+    {
+        $category = $request->query('category');
+
+        $categoryName = Category::query()->where('id', $category)->pluck('name');
+
+        $date = new \DateTime('tomorrow -1 year'); // from last 1 month till today
+
+        \DB::statement("SET SQL_MODE=''");
+
+//        $days = Expense::select(array(
+//            DB::raw('date(created_at) as date'),
+//            DB::raw('sum(cost) as total')
+//        ))
+//            ->where('user_id', Auth::id())
+//            ->where('created_at', '>', $date)
+//            ->groupBy('date')
+//            ->orderBy('date', 'DESC')
+//            ->pluck('total', 'date');
+
+
+        $days = Expense::query()->select(array(
+            DB::raw('date(created_at) as date'),
+            DB::raw('sum(cost) as total')
+        ))
+        ->where('category_id', $category)
+        ->where('user_id', Auth::id())
+        ->groupBy('date')
+        ->pluck('total', 'date');
+
+
+        return view('backend.report.reportDaily', compact('days', 'category', 'categoryName'));
     }
 
 }

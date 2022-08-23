@@ -20,12 +20,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Categories of Expense</h1>
+                        <h1 class="m-0 text-dark">Report Category Wise</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Categories of Expense</li>
+                            <li class="breadcrumb-item active">Report Category Wise</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -38,23 +38,23 @@
             <div class="container-fluid">
                 <!-- Small boxes (Stat box) -->
                 <div class="row">
-                    @forelse($books as $book)
+                    @forelse($categories as $category)
                         <div class="col-md-3">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>{{ $book->name }} <i class="fa fa-book"></i></h5>
+                                    <h5>{{ $category->name }} <i class="fa fa-book"></i></h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="heading">
-                                        Category Created : <span class="badge badge-success"> {{ \Carbon\Carbon::parse($book->created_at)->format('d-m-Y') }}</span> <br>
-                                        Total Expense : <span class="badge badge-warning">{{ $book->expenses_count }}</span>
+                                        Category Created : <span class="badge badge-success"> {{ \Carbon\Carbon::parse($category->created_at)->format('d-m-Y') }}</span> <br>
+                                        Total Expense : <span class="badge badge-warning">{{ $category->expenses_count }}</span>
                                     </div>
 
 
                                 </div>
                                 <div class="card-footer">
                                     <div class="mt-3 d-flex justify-content-around">
-                                        <a class="btn btn-primary" href="{{ url("/expense/index?category=$book->id") }}">Make an Expense</a>
+                                        <a class="btn btn-primary" href="{{ url("/report/daily-wise?category=$category->id") }}">View Daily Wise Report</a>
                                     </div>
                                 </div>
                             </div>
@@ -64,7 +64,7 @@
                         <div class="col-md-4 mt-5">
                             <div class="card">
                                 <div class="card-heading mt-3">
-                                    <h4 class="text-center">No Books Found</h4>
+                                    <h4 class="text-center text-danger">No Books Found to Generate Report</h4>
                                 </div>
                                 <div class="card-body">
                                     <h6 class="text-center"><a href="{{ route('category.index') }}">Create a Book</a></h6>

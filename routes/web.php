@@ -47,10 +47,15 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Report Controller
         Route::get('/report/daily', [ReportController::class, 'reportDaily'])->name('report.daily');
-        Route::get('/report/daily/{date}', [ReportController::class, 'printDailyReport'])->name('report.print');
+        Route::get('/report/daily/print?date={date?}&category={category?}', [ReportController::class, 'printDailyReport']);
         Route::get('/report/weekly', [ReportController::class, 'reportWeekly'])->name('report.weekly');
         Route::get('/report/monthly', [ReportController::class, 'reportMonthly'])->name('report.monthly');
 
+        // Daily Report By Category Wise
+        Route::get('/report/daily-wise/{category?}', [ReportController::class, 'reportDailyCategoryWise']);
+
+        // PDF Controller
+        Route::get('/daily-report-download/{date}', [ReportController::class, 'dailyReportDownloadPdf'])->name('daily-report-download.pdf');
 
     });
 

@@ -42,7 +42,7 @@
                             <div class="icon">
                                 <i class="fa fa-calendar-o"></i>
                             </div>
-{{--                            <a href="{{ route('report.daily') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>--}}
+                            <a href="{{ route('report.daily') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
@@ -58,7 +58,7 @@
                             <div class="icon">
                                 <i class="fa fa-calendar-check-o"></i>
                             </div>
-{{--                            <a href="{{ route('report.weekly') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>--}}
+                            <a href="{{ route('report.weekly') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
@@ -74,7 +74,7 @@
                             <div class="icon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-{{--                            <a href="{{ route('report.monthly') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>--}}
+                            <a href="{{ route('report.monthly') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                 </div>
