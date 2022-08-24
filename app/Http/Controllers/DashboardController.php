@@ -23,6 +23,7 @@ class DashboardController extends Controller
             )
             ->where('user_id', Auth::id())
             ->where('created_at', 'like', "$dateToday%")
+            ->where('expense_type', 'withdraw')
             ->groupBy('date')
             ->pluck('total');     // get only total sum as an array
 //            ->get();    // get date and total sum
@@ -35,6 +36,7 @@ class DashboardController extends Controller
             ->select(DB::raw('sum(cost) as total'))
             ->where('user_id', Auth::id())
             ->where('created_at', '>', $previousDate)
+            ->where('expense_type', 'withdraw')
             ->get();
 
         // monthly expense
