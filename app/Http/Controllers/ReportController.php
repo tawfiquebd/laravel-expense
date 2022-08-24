@@ -122,6 +122,8 @@ class ReportController extends Controller
             ))
                 ->where('user_id', Auth::id())
                 ->where('created_at', 'like', "$date%")
+                ->where('expense_type', 'withdraw')
+//                ->where('category_id', 31)
 //                    ->pluck('total', 'date')
                 ->get(['total', 'date']);
 
