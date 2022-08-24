@@ -14,25 +14,6 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReportController extends Controller
 {
-//    public function reportDaily() {
-//
-//        $date = new \DateTime('tomorrow -1 year'); // from last 1 month till today
-//
-//        \DB::statement("SET SQL_MODE=''");
-//
-//        $days = Expense::select(array(
-//            DB::raw('date(created_at) as date'),
-//            DB::raw('sum(cost) as total')
-//        ))
-//            ->where('user_id', Auth::id())
-//            ->where('created_at', '>', $date)
-//            ->groupBy('date')
-//            ->orderBy('date', 'DESC')
-//            ->pluck('total', 'date');
-//
-//        return view('backend.report.reportDaily', compact('days'));
-//    }
-
 
     public function reportDaily() {
 
@@ -200,21 +181,11 @@ class ReportController extends Controller
 
         \DB::statement("SET SQL_MODE=''");
 
-//        $days = Expense::select(array(
-//            DB::raw('date(created_at) as date'),
-//            DB::raw('sum(cost) as total')
-//        ))
-//            ->where('user_id', Auth::id())
-//            ->where('created_at', '>', $date)
-//            ->groupBy('date')
-//            ->orderBy('date', 'DESC')
-//            ->pluck('total', 'date');
-
-
         $days = Expense::query()->select(array(
             DB::raw('date(created_at) as date'),
             DB::raw('sum(cost) as total')
         ))
+        ->where('expense_type', 'withdraw')
         ->where('category_id', $category)
         ->where('user_id', Auth::id())
         ->groupBy('date')
