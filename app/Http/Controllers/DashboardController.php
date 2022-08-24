@@ -44,6 +44,7 @@ class DashboardController extends Controller
             ->select(DB::raw('sum(cost) as total'))
             ->where('user_id', '=', Auth::id())
             ->whereMonth('created_at', $currentMonth)
+            ->where('expense_type', 'withdraw')
             ->get();
 
         return view('backend.dashboard', compact('expenseByToday', 'expenseByWeek', 'expenseByMonth'));
