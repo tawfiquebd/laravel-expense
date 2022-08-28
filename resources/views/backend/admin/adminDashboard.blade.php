@@ -59,12 +59,43 @@
                         </div>
                     </div>
 
-                    </div>
                 </div>
-                <!-- /.row (main row) -->
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
+
+                <div class="row">
+                    <div class="col-lg-6 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                <h3> {{ $totalDeposits ?? 0 }} BDT</h3>
+
+                                <p>Total Deposits BDT</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-usd"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <h3> {{ $totalExpenses ?? 0 }} BDT</h3>
+
+                                <p>Total Expenses BDT</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-money"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.row (main row) -->
+    </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
     </div>
 
 @endsection

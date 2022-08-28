@@ -61,7 +61,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Admin panel
     Route::group(['middleware' => 'checkRole:Admin'], function () {
-
         Route::get('/admin', [AdminController::class, "dashboard"])->name('admin.dashboard');
         Route::get('/admin/users', [AdminController::class, "users"])->name('admin.users');
         Route::post('/admin/user/{id}/status', [AdminController::class, "userStatus"])->name('user.status');

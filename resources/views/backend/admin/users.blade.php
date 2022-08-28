@@ -4,6 +4,12 @@
 
 @section('style')
 
+    <style>
+        button {
+            cursor: pointer;
+        }
+    </style>
+
 @endsection
 
 
