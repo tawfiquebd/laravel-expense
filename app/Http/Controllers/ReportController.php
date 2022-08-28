@@ -106,8 +106,11 @@ class ReportController extends Controller
 
 
     // Report PDF Download
-    public function dailyReportDownloadPdf($date)
+    public function dailyReportDownloadPdf(Request $request)
     {
+
+        $date = $request->date;
+        $category = $request->category;
 
         $userDetails = Auth::user();
         $isValidDate = $this->isDate($date);
@@ -121,6 +124,7 @@ class ReportController extends Controller
                 DB::raw('sum(cost) as total')
             ))
                 ->where('user_id', Auth::id())
+                ->where('category_id', $category)
                 ->where('created_at', 'like', "$date%")
                 ->where('expense_type', 'withdraw')
 //                ->where('category_id', 31)
@@ -130,23 +134,46 @@ class ReportController extends Controller
             // Get single expense data
             $expenses = DB::table('expenses')
                 ->where('user_id', Auth::id())
+                ->where('category_id', $category)
                 ->where('created_at', 'like', "$date%")
                 ->get();
         }
-
         $totalDepositAmount = Expense::query()
             ->where('user_id', Auth::id())
-            ->where('created_at', 'like', "$date%")
+            ->where('category_id', $category)
             ->where('expense_type', "deposit")
+            ->where('created_at', 'like', "$date%")
             ->sum('cost');
 
         $totalCashOutAmount = Expense::query()
             ->where('user_id', Auth::id())
+            ->where('category_id', $category)
             ->where('created_at', 'like', "$date%")
             ->where('expense_type', "withdraw")
             ->sum('cost');
 
         $finalAvailableBalance = $totalDepositAmount - $totalCashOutAmount;
+
+        $finalWholeAvailableBalance = 0;
+
+        if ($totalDepositAmount <= 0) {
+
+            $totalWholeDepositAmount = Expense::query()
+                ->where('user_id', Auth::id())
+                ->where('category_id', $category)
+                ->where('expense_type', "deposit")
+                ->sum('cost');
+
+
+            $totalWholeCashOutAmount = Expense::query()
+                ->where('user_id', Auth::id())
+                ->where('category_id', $category)
+                ->where('expense_type', "withdraw")
+                ->sum('cost');
+
+            $finalWholeAvailableBalance = $totalWholeDepositAmount - $totalWholeCashOutAmount;
+        }
+
 
 
 
@@ -158,6 +185,7 @@ class ReportController extends Controller
             "totalDepositAmount" => $totalDepositAmount,
             "totalCashOutAmount" => $totalCashOutAmount,
             "finalAvailableBalance" => $finalAvailableBalance,
+            "finalWholeAvailableBalance" => $finalWholeAvailableBalance,
         ];
 
 

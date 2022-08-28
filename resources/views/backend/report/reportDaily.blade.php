@@ -63,7 +63,7 @@
                                                 {{--<i class="fa fa-print"></i>--}}
                                             {{--</a>--}}
 
-                                            <a href="{{ route('daily-report-download.pdf', $day) }}" class="btn btn-warning"><i class="fa fa-file-pdf-o"></i></a>
+                                            <a href="{{ route('daily-report-download.pdf', ["date" => $day, "category" => request()->get('category') ]) }}" class="btn btn-warning"><i class="fa fa-file-pdf-o"></i></a>
                                         </td>
                                     </tr>
 

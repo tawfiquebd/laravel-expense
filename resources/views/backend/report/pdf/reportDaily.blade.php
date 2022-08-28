@@ -40,7 +40,7 @@
 
             <tr>
                 <th style="width: 32%;">Date :</th>
-                <td style="width: 32%;">{{ $date }}</td>
+                <td style="width: 32%;">{{ Carbon\Carbon::parse($date)->format('d-M-Y') }}</td>
             </tr>
 
             <tr>
@@ -51,7 +51,7 @@
             <tr>
                 <th style="border: 1px solid #000;">{{ $totalDepositAmount }}</th>
                 <th style="border: 1px solid #000;">{{ $totalCashOutAmount }}</th>
-                <th style="border: 1px solid #000;">{{ $finalAvailableBalance }}</th>
+                <th style="border: 1px solid #000;">{{ $totalDepositAmount ? $finalAvailableBalance : $finalWholeAvailableBalance }}</th>
             </tr>
         </table>
 
@@ -104,7 +104,7 @@
         ">
             <tr>
                 <td colspan="6" style="border: 1px solid #000;">Total Available Balance</td>
-                <td style="border: 1px solid #000;">{{ $finalAvailableBalance }} TK.</td>
+                <td style="border: 1px solid #000;">{{ $totalDepositAmount ? $finalAvailableBalance : $finalWholeAvailableBalance }} TK.</td>
             </tr>
         </table>
     </div>

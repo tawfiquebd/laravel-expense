@@ -55,7 +55,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/report/daily-wise/{category?}', [ReportController::class, 'reportDailyCategoryWise']);
 
         // PDF Controller
-        Route::get('/daily-report-download/{date}', [ReportController::class, 'dailyReportDownloadPdf'])->name('daily-report-download.pdf');
+        Route::get('/daily-report-download/{date}/{category}', [ReportController::class, 'dailyReportDownloadPdf'])->name('daily-report-download.pdf');
 
     });
 
