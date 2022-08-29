@@ -36,7 +36,7 @@ class CategoryController extends Controller
                 'user_id' => Auth::id(),
             ]);
 
-            return redirect()->back()->with('success', "Book Created Successfully!");
+            return redirect()->back()->with('success', "Category Created Successfully!");
         } catch (Exception $exception) {
             return redirect()->back()->with('error', "Something went wrong " . $exception->getMessage());
         }
@@ -60,7 +60,7 @@ class CategoryController extends Controller
             'name' => $request->input('name'),
         ]);
 
-        return redirect('/category')->with('success', 'Book Updated Successfully');
+        return redirect('/category')->with('success', 'Category Updated Successfully');
     }
 
     public function destroy(Request $request)
@@ -74,6 +74,6 @@ class CategoryController extends Controller
 
         $category->delete();
 
-        return redirect()->back()->with('delete', 'Book Deleted Successfully');
+        return redirect()->back()->with('delete', 'Category Deleted Successfully');
     }
 }

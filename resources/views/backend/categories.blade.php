@@ -146,8 +146,8 @@
             var button = document.getElementById('button'+id);
 
             Swal.fire({
-                title: 'Are you sure to delete this Book?',
-                text: "All expenses under this book will be deleted!",
+                title: 'Are you sure to delete this Category?',
+                text: "All expenses under this category will be deleted!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
