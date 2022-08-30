@@ -24,6 +24,13 @@ class ExpenseController extends Controller
     public function index(Request $request)
     {
         $book = $request->get('category');
+
+        $isCategoryExist = Category::query()->where('id', $book)->exists();
+
+        if (!$isCategoryExist) {
+            return redirect('/');
+        }
+
         $query = Expense::query();
         $expenses = $query->with([
             'category',
