@@ -162,7 +162,7 @@
                 setTimeout(function () {
                     Swal.fire(
                         'Deleted!',
-                        'Your book has been deleted.',
+                        'Your Category has been deleted.',
                         'success'
                     )
                 }, 500)

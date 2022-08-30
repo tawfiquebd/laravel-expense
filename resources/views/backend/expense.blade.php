@@ -251,8 +251,8 @@
             var button = document.getElementById('button'+id);
 
             Swal.fire({
-                title: 'Are you sure to delete this Book?',
-                text: "All expenses under this book will be deleted!",
+                title: 'Are you sure to delete this Expense?',
+                text: "This can not be undo!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -267,7 +267,7 @@
                 setTimeout(function () {
                     Swal.fire(
                         'Deleted!',
-                        'Your book has been deleted.',
+                        'Your Expense has been deleted.',
                         'success'
                     )
                 }, 500)
