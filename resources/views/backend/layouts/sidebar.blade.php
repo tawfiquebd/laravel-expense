@@ -40,18 +40,18 @@
                                 <p>Daily</p>
                             </a>
                         </li>
-                        {{--<li class="nav-item">--}}
-                            {{--<a href="{{ route('report.weekly') }}" class="nav-link">--}}
-                                {{--<i class="fa fa-circle-o nav-icon"></i>--}}
-                                {{--<p>Weekly</p>--}}
-                            {{--</a>--}}
-                        {{--</li>--}}
-                        {{--<li class="nav-item">--}}
-                            {{--<a href="{{ route('report.monthly') }}" class="nav-link">--}}
-                                {{--<i class="fa fa-circle-o nav-icon"></i>--}}
-                                {{--<p>Monthly</p>--}}
-                            {{--</a>--}}
-                        {{--</li>--}}
+                        <li class="nav-item">
+                            <a href="{{ route('report.weekly') }}" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>Weekly</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('report.monthly') }}" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>Monthly</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 

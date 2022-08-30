@@ -84,6 +84,7 @@ class ReportController extends Controller
         )
             ->where('user_id', Auth::id())
             ->where('created_at', '>', $previousDate)
+            ->where('expense_type', 'withdraw')
             ->get(['total']);
 
         return view('backend.report.reportWeekly', compact('todayDate', 'previousDate', 'expense'));
@@ -98,6 +99,7 @@ class ReportController extends Controller
                 DB::raw('year(created_at) as year')
             ))
             ->where('user_id', '=', Auth::id())
+            ->where('expense_type', 'withdraw')
             ->groupby(['month', 'year'])
             ->latest()
             ->get();
